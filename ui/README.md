@@ -9,7 +9,7 @@ This is a web interface for viewing the benchmark results produced by `clp-bench
 ## Set up
 The web interface includes a backend and a frontend.
 
-## Backend
+### Backend
 + Enter the `backend` directory. 
 + Create a virtual `python3` environment under `/backend`:
   ```shell
@@ -30,7 +30,7 @@ The web interface includes a backend and a frontend.
   python3 load_results.py
   ```
 
-## Frontend
+### Frontend
 * Enter the `frontend` directory.
 + Install dependencies:
   ```
@@ -47,6 +47,9 @@ The web interface includes a backend and a frontend.
   ```
   + The frontend will be available through the backend's address.
 
-## Configuration
+### Configuration
 There is a template `.env` file in this directory. To create a custom configuration, you may copy
 `.env` to `.env.local` and modify the content, which will override the settings in `.env`.
+
+# Benchmarking Results Database
+We use `sqlite` to manage a mini-database that contains all benchmarking results.

@@ -52,7 +52,8 @@ class BenchmarkingResult:
 
     @staticmethod
     def get_mb_from_byte(byte: int) -> str:
-        return f"{(byte / 1024 / 1024):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
+        BYTES_TO_MB = 1 / 1024 / 104
+        return f"{(byte * BYTES_TO_MB):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
 
     @staticmethod
     def get_mb(mb: int) -> str:
@@ -60,15 +61,18 @@ class BenchmarkingResult:
 
     @staticmethod
     def get_mb_from_kb(kb: int) -> str:
-        return f"{(kb / 1024):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
+        KB_TO_MB = 1 / 1024
+        return f"{(kb * KB_TO_MB):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
 
     @staticmethod
     def get_mb_from_gb(gb: int) -> str:
-        return f"{(gb * 1024):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
+        GB_TO_MB = 1024
+        return f"{(gb * GB_TO_MB):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
 
     @staticmethod
     def get_s_from_ns(ns: int) -> str:
-        return f"{(ns / 1e9):.{BenchmarkingResult.TIME_PRECISION}f} s"
+        NS_TO_S = 1 / 1e9
+        return f"{(ns * NS_TO_S):.{BenchmarkingResult.TIME_PRECISION}f} s"
 
     def __init__(
         self, mode: str, compressed_size="", decompressed_size="", ratio="", ingest_e2e_latency=""
