@@ -24,7 +24,7 @@ class CPTExecutorElasticsearch(CPTExecutorBase):
         for mode in BenchmarkingMode:
             self.benchmarking_results[mode].system_metric_results[
                 BenchmarkingSystemMetric.MEMORY
-            ].result_baseline = -1
+            ].result_baseline = BenchmarkingResult.NO_REQUIRE_BASELINE_SYSTEM_METRIC
 
     def deploy(self, mode: BenchmarkingMode):
         logger.info("Deploying Elasticsearch")

@@ -49,6 +49,10 @@ class BenchmarkingResult:
     SIZE_PRECISION = 2
     # Used for latency, unit: s
     TIME_PRECISION = 9
+    # Indicate the system metric does not have baseline
+    NO_REQUIRE_BASELINE_SYSTEM_METRIC = -1
+    # Indicate the system metric needs baseline
+    REQUIRE_BASELINE_SYSTEM_METRIC = 0
 
     @staticmethod
     def get_mb_from_byte(byte: int) -> str:
@@ -87,9 +91,7 @@ class BenchmarkingResult:
         class SystemMetricResult:
             def __init__(self, metric: BenchmarkingSystemMetric):
                 self.metric = metric
-                self.result_baseline = (
-                    0  # The OS has used how much memory etc. 0: need baseline, -1: no baseline
-                )
+                self.result_baseline = BenchmarkingResult.REQUIRE_BASELINE_SYSTEM_METRIC
                 self.stage_results: Dict[BenchmarkingStage, List] = {}
                 for stage in BenchmarkingStage:
                     self.stage_results[stage] = []
@@ -311,7 +313,10 @@ class CPTExecutorBase(ABC):
                                 ]
                                 if 0 < result
                             ]
-                            if -1 != result.system_metric_results[metric].result_baseline:
+                            if (
+                                BenchmarkingResult.NO_REQUIRE_BASELINE_SYSTEM_METRIC
+                                != result.system_metric_results[metric].result_baseline
+                            ):
                                 average_metric_result = int(
                                     statistics.mean(
                                         result.system_metric_results[metric].stage_results[stage]
@@ -391,7 +396,10 @@ class CPTExecutorBase(ABC):
             return
         if not self.__overall_threading_event.is_set():
             logger.info(f"Start polling {metric.value[0]} usage for mode {mode.value}")
-            if 0 == self.benchmarking_results[mode].system_metric_results[metric].result_baseline:
+            if (
+                BenchmarkingResult.REQUIRE_BASELINE_SYSTEM_METRIC
+                == self.benchmarking_results[mode].system_metric_results[metric].result_baseline
+            ):
                 metric_sample = self._acquire_system_metric_sample(metric)
                 self.benchmarking_results[mode].system_metric_results[
                     metric

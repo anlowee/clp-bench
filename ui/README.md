@@ -24,14 +24,15 @@ The web interface includes a backend and a frontend.
   ```shell
   python3 app.py
   ```
-+ If this is the first time you've run the backend, you may also need to load the data (leave app.py
-  running and run the following in another window):
++ If this is the first time you've run the backend, you may also need to load the data (leave 
+  `app.py` running and run the following in another window, as `load_results.py` requires the 
+  database to be initialized):
   ```shell
   python3 load_results.py
   ```
 
 ### Frontend
-* Enter the `frontend` directory.
++ Enter the `frontend` directory.
 + Install dependencies:
   ```
   npm install
