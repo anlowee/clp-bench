@@ -46,22 +46,22 @@ class BenchmarkingResult:
     """
 
     # Used for file size and memory usage, unit: MB
-    SIZE_PRECISION = 2
+    SIZE_PRECISION: int = 2
     # Used for latency, unit: s
-    TIME_PRECISION = 9
+    TIME_PRECISION: int = 9
     # Indicate the system metric does not have baseline
-    NO_REQUIRE_BASELINE_SYSTEM_METRIC = -1
+    NO_REQUIRE_BASELINE_SYSTEM_METRIC: int = -1
     # Indicate the system metric needs baseline
-    REQUIRE_BASELINE_SYSTEM_METRIC = 0
+    REQUIRE_BASELINE_SYSTEM_METRIC: int = 0
 
     @staticmethod
     def get_mb_from_byte(byte: int) -> str:
-        BYTES_TO_MB = 1 / 1024 / 104
+        BYTES_TO_MB = 1 / 1024 / 1024
         return f"{(byte * BYTES_TO_MB):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
 
     @staticmethod
     def get_mb(mb: int) -> str:
-        return f"{mb}:.{BenchmarkingResult.SIZE_PRECISION} MB"
+        return f"{mb:.{BenchmarkingResult.SIZE_PRECISION}f} MB"
 
     @staticmethod
     def get_mb_from_kb(kb: int) -> str:
