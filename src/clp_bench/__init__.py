@@ -71,21 +71,38 @@ def cold_run_benchmark(executor: CPTExecutorBase):
             logger.error(f"Failed to finish benchmark in cold-run mode: {e}")
 
 
-def query_only_run_benchmark(executor: CPTExecutorBase):
-    logger.info("Running benchmarking in query-only-run mode")
+def ingest(executor: CPTExecutorBase):
+    logger.info("Ingesting data")
     try:
-        executor.start_polling_system_metric(
-            BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.QUERY_ONLY_RUN_MODE
-        )
-        # Query-only run mode has no deployment, it assumes finished ingestion.
-        executor.launch(BenchmarkingMode.QUERY_ONLY_RUN_MODE)
-        executor.run_query_benchmark(BenchmarkingMode.QUERY_ONLY_RUN_MODE)
+        executor.start_polling_system_metric(BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE)
+        executor.deploy(BenchmarkingMode.INGEST_MODE)
+        executor.launch(BenchmarkingMode.INGEST_MODE)
+        executor.ingest(BenchmarkingMode.INGEST_MODE)
     except Exception as e:
-        logger.error(f"Failed to run benchmark in query-only-run mode: {e}")
+        logger.error(f"Failed to ingest in {BenchmarkingMode.INGEST_MODE.value} mode : {e}")
     finally:
-        executor.stop_polling_system_metric(
-            BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.QUERY_ONLY_RUN_MODE
-        )
+        executor.stop_polling_system_metric(BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE)
+        try:
+            executor.terminate(BenchmarkingMode.INGEST_MODE)
+        except Exception as e:
+            logger.error(f"Failed to finish benchmark in {BenchmarkingMode.INGEST_MODE.value} mode: {e}")
+
+
+def run_query_benchmark(executor: CPTExecutorBase, mode: BenchmarkingMode = BenchmarkingMode.HOT_RUN_MODE):
+    logger.info(f"Running benchmarking in {mode.value} mode")
+    try:
+        executor.start_polling_system_metric(BenchmarkingSystemMetric.MEMORY, mode)
+        # Note that no deployment here, it assumes finished ingestion.
+        executor.launch(mode)
+        executor.run_query_benchmark(mode)
+    except Exception as e:
+        logger.error(f"Failed to run benchmark in {mode.value} mode: {e}")
+    finally:
+        executor.stop_polling_system_metric(BenchmarkingSystemMetric.MEMORY, mode)
+        try:
+            executor.terminate(mode)
+        except Exception as e:
+            logger.error(f"Failed to finish benchmark in {mode.value} mode: {e}")
 
 
 def main():
@@ -119,7 +136,7 @@ def main():
         "-m",
         "--mode",
         type=str,
-        choices=["all", "hot", "cold", "query-only"],
+        choices=["all", "hot", "cold", "query-only", "hotv2", "coldv2", "ingest"],
         default="all",
         help="The benchmarking mode",
     )
@@ -147,6 +164,15 @@ def main():
 
     # Query only run mode, assuming just finished a hot run or cold run
     if "query-only" == args.mode:
-        query_only_run_benchmark(executor)
+        run_query_benchmark(executor)
+        
+    if "ingest" == args.mode:
+        ingest(executor)
+        
+    if "hotv2" == args.mode:
+        run_query_benchmark(executor, BenchmarkingMode.HOT_RUN_MODE)
+    
+    if "coldv2" == args.mode:
+        run_query_benchmark(executor, BenchmarkingMode.COLD_RUN_MODE)
 
     executor.visualize()

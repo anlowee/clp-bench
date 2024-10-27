@@ -21,6 +21,7 @@ class BenchmarkingMode(Enum):
     HOT_RUN_MODE = "hot run"
     COLD_RUN_MODE = "cold run"
     QUERY_ONLY_RUN_MODE = "query only run"
+    INGEST_MODE = "ingest"
 
 
 class BenchmarkingStage(Enum):
@@ -202,6 +203,7 @@ class CPTExecutorBase(ABC):
             else:
                 raise Exception(f"{directory_path} does not exist in {container_id}: {e1}")
 
+    # TODO: we should only have one type of memory usage method which is RSS
     def _get_mem_usage_from_docker_stats(self, line: str) -> float:
         mem_usage = line.strip().split()[3]
         if "GiB" in mem_usage:
@@ -353,6 +355,8 @@ class CPTExecutorBase(ABC):
         for stage in BenchmarkingStage:
             if self.__system_metric_pollers[metric].stage_events[stage].is_set():
                 metric_sample = self._acquire_system_metric_sample(metric)
+                if 0 >= metric_sample:
+                    break
                 self.benchmarking_results[mode].system_metric_results[metric].stage_results[
                     stage
                 ].append(metric_sample)
