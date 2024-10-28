@@ -552,7 +552,45 @@ For memory monitoring, similar to CLP and CLP-S, `clp-bench` uses `ps aux` and c
 field.
 
 ### MongoDB
-TODO
+🚧THIS SECTION IS UNDER CONSTRUCTION DUE TO CODEBASE REFACTORING
+
+We benchmark MongoDB for semi-structured dataset. An example of `yaml` config file:
+```yaml
+system_metric:
+  enable: True
+  memory:
+    ingest_polling_interval: 10
+    run_query_benchmark_polling_interval: 10
+
+mongodb:
+  container_id: mongodb-clp-bench
+  launch_script_path: /home/assets/start-mongodb.sh
+  ingest_script_path: /home/assets/ingest.sh
+  search_script_path: /home/assets/search.sh
+  terminate_script_path: /home/assets/stop-mongodb.sh
+  dataset_path: /home/datasets/mongod.log
+  queries:
+    - '{ "attr.tickets": { "$exists": true}}'
+    - '{"id": {"$eq": 22419}}'
+    - '{"attr.message.msg": {"$regex": "^log_release"}, "attr.message.session_name": "connection"}'
+    - '{"ctx": "initandlisten", "$or": [{"msg": {"$exists": true, "$ne": "WiredTiger message"}}, {"attr.message.msg": {"$regex": "^log_remove"}}]}'
+    - '{"c": "WTWRTLOG", "attr.message.ts_sec": {"$gt": 1679490000}}'
+    - '{"ctx": "FlowControlRefresher", "attr.numTrimmed": {"$eq": 0}}'
+```
+
+We use `mongosh`, `mongod`, `mongoexport` and `mongoimport` to ingest the dataset and run the query benchmarking. For specifics, please refer to the scripts under `assets/mongodb`. Basically, there is no special preprocessing for the dataset needed. With the config `yaml` file, we can run the following commands to ingest data and run the query benchmarking:
+```shell
+# Ingest the dataset
+clp-bench -t MongoDB -m ingest -c {path-to-yaml}
+# Run the query benchmarking in hot-run mode
+clp-bench -t MongoDB -m hotv2 -c {path-to-yaml}
+# Run the query benchmarking in cold-run mode
+clp-bench -t MongoDB -m coldv2 -c {path-to-yaml}
+```
+
+We use `ps` to get the `RSS` field as the memory usage. We sum up the memory usage of all related processes of `mongosh`, `mongod`, `mongoexport` and `mongoimport` as the memory usage. We poll the memory usage and take the average as the ingest memroy usage and query memory usage.
+
+For hot-run mode, we run each query for 3 times before we measure the end-to-end latency of that query to warm up the cache; for cold-run mode, we run each query after clearing the page cache, then measure the end-to-end latency.
 
 [CLP]: https://github.com/y-scope/clp
 [clp-s]: https://docs.yscope.com/clp/main/user-guide/core-clp-s.html
