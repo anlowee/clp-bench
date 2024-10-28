@@ -15,5 +15,6 @@ docker run \
 	--name "$container_name" \
 	--mount "type=bind,src=$script_dir,dst=/home/assets" \
 	--mount "type=bind,src=$1,dst=/home/datasets" \
+    --mount "type=bind,src=$2,dst=/data/db" \
 	"$container_name" \
 	/bin/bash -l
