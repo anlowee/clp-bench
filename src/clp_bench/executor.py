@@ -218,6 +218,16 @@ class CPTExecutorBase(ABC):
     def _execute_query(self, mode: BenchmarkingMode, command: str):
         wc_command = f"{command} | wc -l"
         logger.info(f"Executing command: {wc_command}")
+        if BenchmarkingMode.HOT_RUN_MODE == mode:
+            logger.info("Warming up the query")
+            for i in range(3):
+                subprocess.run(
+                    wc_command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.DEVNULL,
+                    shell=True,
+                    check=True,
+                )
         start_ts = time.perf_counter_ns()
         result = subprocess.run(
             wc_command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, shell=True, check=True

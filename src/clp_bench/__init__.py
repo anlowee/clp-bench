@@ -74,21 +74,29 @@ def cold_run_benchmark(executor: CPTExecutorBase):
 def ingest(executor: CPTExecutorBase):
     logger.info("Ingesting data")
     try:
-        executor.start_polling_system_metric(BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE)
+        executor.start_polling_system_metric(
+            BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE
+        )
         executor.deploy(BenchmarkingMode.INGEST_MODE)
         executor.launch(BenchmarkingMode.INGEST_MODE)
         executor.ingest(BenchmarkingMode.INGEST_MODE)
     except Exception as e:
         logger.error(f"Failed to ingest in {BenchmarkingMode.INGEST_MODE.value} mode : {e}")
     finally:
-        executor.stop_polling_system_metric(BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE)
+        executor.stop_polling_system_metric(
+            BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE
+        )
         try:
             executor.terminate(BenchmarkingMode.INGEST_MODE)
         except Exception as e:
-            logger.error(f"Failed to finish benchmark in {BenchmarkingMode.INGEST_MODE.value} mode: {e}")
+            logger.error(
+                f"Failed to finish benchmark in {BenchmarkingMode.INGEST_MODE.value} mode: {e}"
+            )
 
 
-def run_query_benchmark(executor: CPTExecutorBase, mode: BenchmarkingMode = BenchmarkingMode.HOT_RUN_MODE):
+def run_query_benchmark(
+    executor: CPTExecutorBase, mode: BenchmarkingMode = BenchmarkingMode.HOT_RUN_MODE
+):
     logger.info(f"Running benchmarking in {mode.value} mode")
     try:
         executor.start_polling_system_metric(BenchmarkingSystemMetric.MEMORY, mode)
@@ -118,6 +126,7 @@ def main():
         "CLPJson",
         "CLPS",
         "Elasticsearch",
+        "MongoDB",
     ]
     # Command line arguments parsing
     parser = argparse.ArgumentParser(description=description)
@@ -165,13 +174,13 @@ def main():
     # Query only run mode, assuming just finished a hot run or cold run
     if "query-only" == args.mode:
         run_query_benchmark(executor)
-        
+
     if "ingest" == args.mode:
         ingest(executor)
-        
+
     if "hotv2" == args.mode:
         run_query_benchmark(executor, BenchmarkingMode.HOT_RUN_MODE)
-    
+
     if "coldv2" == args.mode:
         run_query_benchmark(executor, BenchmarkingMode.COLD_RUN_MODE)
 
