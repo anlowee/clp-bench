@@ -75,32 +75,32 @@ class CPTExecutorElasticsearch(ClpBenchExecutor):
             ratio_match = re.search(r"Compression ratio for \S+ is (\d+\.\d+)", output)
             ingest_e2e_match = re.search(r"Ingestion time for \S+ is (\d+\.\d+) s", output)
             if decompressed_size_match:
-                self.benchmarking_results[mode].decompressed_size = (
+                self.__benchmarking_results[mode].decompressed_size = (
                     BenchmarkingResult.get_mb_from_byte(int(decompressed_size_match.group(1)))
                 )
                 logger.info(
                     "File size before compression: "
-                    f"{self.benchmarking_results[mode].decompressed_size}"
+                    f"{self.__benchmarking_results[mode].decompressed_size}"
                 )
             else:
                 logger.error("Cannot get decompressed metric")
             if compressed_size_match:
-                self.benchmarking_results[mode].compressed_size = (
+                self.__benchmarking_results[mode].compressed_size = (
                     BenchmarkingResult.get_mb_from_byte(int(compressed_size_match.group(1)))
                 )
                 logger.info(
                     "File size after compression: "
-                    f"{self.benchmarking_results[mode].compressed_size}"
+                    f"{self.__benchmarking_results[mode].compressed_size}"
                 )
             else:
                 logger.error("Cannot get compressed metric")
             if ratio_match:
-                self.benchmarking_results[mode].ratio = f"{ratio_match.group(1)}x"
-                logger.info(f"Compression ratio: {self.benchmarking_results[mode].ratio}")
+                self.__benchmarking_results[mode].ratio = f"{ratio_match.group(1)}x"
+                logger.info(f"Compression ratio: {self.__benchmarking_results[mode].ratio}")
             else:
                 logger.error("Cannot get compression ratio metric")
             if ingest_e2e_match:
-                self.benchmarking_results[mode].ingest_e2e_latency = f"{ingest_e2e_match.group(1)}s"
+                self.__benchmarking_results[mode].ingest_e2e_latency = f"{ingest_e2e_match.group(1)}s"
                 logger.info(
                     f"Elasticsearch compressed data in {dataset_path} successfully in "
                     f"{ingest_e2e_match.group(1)} seconds"

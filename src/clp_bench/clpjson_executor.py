@@ -72,15 +72,15 @@ class CPTExecutorCLPJson(ClpBenchExecutor):
                 f"clp-json compressed data in {dataset_path} successfully in "
                 f"{elapsed_time:.{BenchmarkingResult.TIME_PRECISION}f} seconds"
             )
-            self.benchmarking_results[mode].ingest_e2e_latency = (
+            self.__benchmarking_results[mode].ingest_e2e_latency = (
                 f"{elapsed_time:.{BenchmarkingResult.TIME_PRECISION}f}s"
             )
             output = result.stderr
             match = re.search(r"Compressed (\S+).*?into (\S+).*?\((\d+\.\d+x)\)", output)
             if match:
-                self.benchmarking_results[mode].decompressed_size = match.group(1)
-                self.benchmarking_results[mode].compressed_size = match.group(2)
-                self.benchmarking_results[mode].ratio = match.group(3)
+                self.__benchmarking_results[mode].decompressed_size = match.group(1)
+                self.__benchmarking_results[mode].compressed_size = match.group(2)
+                self.__benchmarking_results[mode].ratio = match.group(3)
                 logger.info("Ingest metrics collected")
             else:
                 logger.error("Cannot get ingest metrics")
