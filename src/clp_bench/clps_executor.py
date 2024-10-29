@@ -73,7 +73,9 @@ class CPTExecutorCLPS(ClpBenchExecutor):
             self.__benchmarking_results[mode].compressed_size = BenchmarkingResult.get_mb(
                 compressed_size_mb
             )
-            self.__benchmarking_results[mode].ratio = f"{decompressed_size_mb / compressed_size_mb}x"
+            self.__benchmarking_results[mode].ratio = (
+                f"{decompressed_size_mb / compressed_size_mb}x"
+            )
         except subprocess.CalledProcessError as e:
             raise Exception(f"clp-s failed to compress data: {e}")
 

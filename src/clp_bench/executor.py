@@ -100,6 +100,7 @@ class BenchmarkingEssentials:
         measure_decompressed_size_script_path: str,
         ingest_script_path: str,
         measure_compressed_size_script_path: str,
+        clear_cache_script_path: str,
         search_script_path: str,
         terminate_script_path: str,
         datasets_path: str,
@@ -115,6 +116,8 @@ class BenchmarkingEssentials:
         self.__check_path(ingest_script_path)
         self.measure_compressed_size_script_path = measure_compressed_size_script_path
         self.__check_path(measure_compressed_size_script_path)
+        self.clear_cache_script_path = clear_cache_script_path
+        self.__check_path(clear_cache_script_path)
         self.search_script_path = search_script_path
         self.__check_path(search_script_path)
         self.terminate_script_path = terminate_script_path
@@ -134,7 +137,6 @@ class BenchmarkingEssentials:
             raise Exception(f"{script_path} does not exist in container {self.container_id}")
 
 
-
 class BenchmarkingSystemMetricPoller:
     def __init__(self, metric: BenchmarkingSystemMetric):
         self.metric = metric
@@ -145,8 +147,7 @@ class BenchmarkingSystemMetricPoller:
         for stage in BenchmarkingStage:
             self.stage_polling_intervals[stage] = 10
             self.stage_events[stage] = threading.Event()
-                    
-                    
+
 
 class ClpBenchExecutor:
     """
@@ -172,7 +173,6 @@ class ClpBenchExecutor:
             self.__benchmarking_results[mode] = BenchmarkingResult(mode)
 
         self.__overall_threading_event = threading.Event()
-
 
     # The following are some utils
     def _check_file_in_docker(self, container_id: str, file_path: str) -> None:
@@ -305,22 +305,18 @@ class ClpBenchExecutor:
         for query in self.__queries:
             if BenchmarkingMode.COLD_RUN_MODE == mode:
                 logger.info("Clearing page cache")
-                subprocess.run(
-                    f"docker exec {self.__benchmarking_essentials.container_id} sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'",
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.STDOUT,
-                    shell=True,
-                    check=True,
-                )
+                self.__execute_script(self.__benchmarking_essentials.clear_cache_script_path)
             elif BenchmarkingMode.HOT_RUN_MODE == mode:
                 for i in range(self.__hot_run_warm_up_times):
-                    self.__execute_script(self.__benchmarking_essentials.search_script_path, [query])
+                    self.__execute_script(
+                        self.__benchmarking_essentials.search_script_path, [query]
+                    )
             start_ts = time.perf_counter_ns()
             query_result = self.__execute_script(
                 self.__benchmarking_essentials.search_script_path, [query]
             )
             end_ts = time.perf_counter_ns()
-            nr_matched_log_lines = int(query_result.stdout.decode("utf-8").strip())
+            nr_matched_log_lines = int(query_result)
             logger.info(f"Number of matched log lines: {nr_matched_log_lines}")
             self.__benchmarking_results[mode].query_e2e_latencies.append(
                 BenchmarkingResult.get_s_from_ns(end_ts - start_ts)
@@ -384,8 +380,6 @@ class ClpBenchExecutor:
                                 f"at {stage.value} stage: {average_metric_result}{metric.value[1]}"
                             )
 
-
-
     def __load_benchmarking_essentials_config(self, assets_path: str):
         config_path = f"{assets_path}/config.yaml"
         with open(config_path, "r") as config_file:
@@ -400,6 +394,7 @@ class ClpBenchExecutor:
             f"{assets_path_in_container}/measure_decompressed_size_script",
             f"{assets_path_in_container}/ingest_script",
             f"{assets_path_in_container}/measure_compressed_size_script",
+            f"{assets_path_in_container}/clear_cache_script",
             f"{assets_path_in_container}/search_script",
             f"{assets_path_in_container}/terminate_script",
             config["datasets_path"],
@@ -423,7 +418,6 @@ class ClpBenchExecutor:
                     f"{metric.value[0].capitalize()} usage polling interval for {stage.value}: "
                     f"{interval} seconds"
                 )
-        
 
     def __record_system_metric_polling_sample(
         self, metric: BenchmarkingSystemMetric, mode: BenchmarkingMode

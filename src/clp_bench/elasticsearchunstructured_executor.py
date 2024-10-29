@@ -100,7 +100,9 @@ class CPTExecutorElasticsearchUnstructured(ClpBenchExecutor):
             else:
                 logger.error("Cannot get compression ratio metric")
             if ingest_e2e_match:
-                self.__benchmarking_results[mode].ingest_e2e_latency = f"{ingest_e2e_match.group(1)}s"
+                self.__benchmarking_results[mode].ingest_e2e_latency = (
+                    f"{ingest_e2e_match.group(1)}s"
+                )
                 logger.info(
                     f"Elasticsearch compressed data in {dataset_path} successfully in "
                     f"{ingest_e2e_match.group(1)} seconds"
