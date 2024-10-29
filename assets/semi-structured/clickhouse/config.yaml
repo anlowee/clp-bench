@@ -5,7 +5,7 @@ system_metric:
     run_query_benchmark_polling_interval: 5
 
 container_id: clickhouse-clp-bench
-dataset_path: /home/xiaochong/develop/clp-bench-prototype/tests/datasets/hadoop-small
+dataset_path: /home/datasets/mongod.log
 hot_run_warm_up_times: 3
 related_processes:
   - clickhouse-server
