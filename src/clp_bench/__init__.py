@@ -17,9 +17,9 @@ logging_console_handler.setFormatter(logging_formatter)
 logger.addHandler(logging_console_handler)
 
 
-def load_benchmarking_assets(asset_path: str) -> ClpBenchExecutor:
-    logger.info(f"Loading benchmarking assets from: {asset_path}")
-    return ClpBenchExecutor(asset_path)
+def load_benchmarking_assets(assets_path: str) -> ClpBenchExecutor:
+    logger.info(f"Loading benchmarking assets from: {assets_path}")
+    return ClpBenchExecutor(assets_path)
 
 
 def ingest(executor: ClpBenchExecutor):
@@ -85,7 +85,7 @@ def main():
 
     # Load corresponding implementation for executor's SPI
     try:
-        executor = load_benchmarking_assets(args.target, args.config)
+        executor = load_benchmarking_assets(args.asset)
     except Exception as e:
         traceback.print_exc()
         logger.error(e)

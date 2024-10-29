@@ -143,13 +143,13 @@ class ClpBenchExecutor:
     SPI manner.
     """
 
-    def __init__(self, asset_path: str) -> None:
+    def __init__(self, assets_path: str) -> None:
         super().__init__()
         self.benchmarking_essentials: BenchmarkingEssentials
         self.queries: List[str]
         self.hot_run_warm_up_times: int
         self.related_processes: List[str]
-        self.__load_benchmarking_essentials_config(asset_path)
+        self.__load_benchmarking_essentials_config(assets_path)
         # Results for different modes
         self.benchmarking_results: Dict[BenchmarkingMode, BenchmarkingResult] = {}
         for mode in BenchmarkingMode:
@@ -396,21 +396,22 @@ class ClpBenchExecutor:
                 f"{interval} seconds"
             )
 
-    def __load_benchmarking_essentials_config(self, asset_path: str):
-        config_path = f"{asset_path}/config.yaml"
+    def __load_benchmarking_essentials_config(self, assets_path: str):
+        config_path = f"{assets_path}/config.yaml"
         with open(config_path, "r") as config_file:
             config = yaml.safe_load(config_file)
             if config is None:
                 raise Exception("Unable to parse " + config_path)
+        assets_path_in_container = config["assets_path"]
         self.benchmarking_essentials = BenchmarkingEssentials(
             config["container_id"],
-            f"{asset_path}/reset_script",
-            f"{asset_path}/launch_script",
-            f"{asset_path}/measure_decompressed_size_script",
-            f"{asset_path}/ingest_script",
-            f"{asset_path}/measure_compressed_size_script",
-            f"{asset_path}/search_script",
-            f"{asset_path}/terminate_script",
+            f"{assets_path_in_container}/reset_script",
+            f"{assets_path_in_container}/launch_script",
+            f"{assets_path_in_container}/measure_decompressed_size_script",
+            f"{assets_path_in_container}/ingest_script",
+            f"{assets_path_in_container}/measure_compressed_size_script",
+            f"{assets_path_in_container}/search_script",
+            f"{assets_path_in_container}/terminate_script",
             config["dataset_path"],
         )
         self.queries: List[str] = config["queries"]
