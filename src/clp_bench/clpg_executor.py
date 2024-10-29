@@ -6,14 +6,14 @@ from .executor import (
     BenchmarkingMode,
     BenchmarkingResult,
     BenchmarkingSystemMetric,
-    CPTExecutorBase,
+    ClpBenchExecutor,
 )
 
 # Retrieve logger
 logger = logging.getLogger(__name__)
 
 
-class CPTExecutorCLPG(CPTExecutorBase):
+class CPTExecutorCLPG(ClpBenchExecutor):
     """
     A service provider for clp, which is a binary; clg is used for searching.
     """

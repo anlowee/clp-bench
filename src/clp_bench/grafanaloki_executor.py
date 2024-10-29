@@ -5,13 +5,13 @@ from datetime import timedelta
 
 from dateutil import parser
 
-from .executor import BenchmarkingMode, BenchmarkingResult, CPTExecutorBase
+from .executor import BenchmarkingMode, BenchmarkingResult, ClpBenchExecutor
 
 # Retrieve logger
 logger = logging.getLogger(__name__)
 
 
-class CPTExecutorGrafanaLoki(CPTExecutorBase):
+class CPTExecutorGrafanaLoki(ClpBenchExecutor):
     """
     A service provider for Grafana Loki.
     """

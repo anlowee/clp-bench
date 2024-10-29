@@ -1,12 +1,12 @@
 import logging
 
-from .executor import BenchmarkingMode, CPTExecutorBase
+from .executor import BenchmarkingMode, ClpBenchExecutor
 
 # Retrieve logger
 logger = logging.getLogger(__name__)
 
 
-class CPTExecutorGrep(CPTExecutorBase):
+class CPTExecutorGrep(ClpBenchExecutor):
     """
     A service provider for grep, which is a binary.
     """

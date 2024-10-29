@@ -6,25 +6,17 @@ from .executor import (
     BenchmarkingMode,
     BenchmarkingResult,
     BenchmarkingSystemMetric,
-    CPTExecutorBase,
+    ClpBenchExecutor,
 )
 
 # Retrieve logger
 logger = logging.getLogger(__name__)
 
 
-class CPTExecutorElasticsearch(CPTExecutorBase):
+class CPTExecutorElasticsearch(ClpBenchExecutor):
     """
     A service provider for Elasticsearch.
     """
-
-    def __init__(self, config_path: str) -> None:
-        super().__init__(config_path)
-        # We read memory info directly from elasticsearch's API, there is no need to use baseline
-        for mode in BenchmarkingMode:
-            self.benchmarking_results[mode].system_metric_results[
-                BenchmarkingSystemMetric.MEMORY
-            ].result_baseline = BenchmarkingResult.NO_REQUIRE_BASELINE_SYSTEM_METRIC
 
     def deploy(self, mode: BenchmarkingMode):
         logger.info("Deploying Elasticsearch")

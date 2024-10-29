@@ -6,14 +6,14 @@ from .executor import (
     BenchmarkingMode,
     BenchmarkingResult,
     BenchmarkingSystemMetric,
-    CPTExecutorBase,
+    ClpBenchExecutor,
 )
 
 # Retrieve logger
 logger = logging.getLogger(__name__)
 
 
-class CPTExecutorGLT(CPTExecutorBase):
+class CPTExecutorGLT(ClpBenchExecutor):
     """
     A service provider for glt, which is a binary.
     """
