@@ -58,13 +58,11 @@ class BenchmarkingResult:
     def get_mb_from_byte(byte: int) -> str:
         BYTES_TO_MB = 1 / 1024 / 1024
         return f"{(byte * BYTES_TO_MB):.{BenchmarkingResult.SIZE_PRECISION}f} MB"
-    
 
     @staticmethod
     def get_s_from_ns(ns: int) -> str:
         NS_TO_S = 1 / 1e9
         return f"{(ns * NS_TO_S):.{BenchmarkingResult.TIME_PRECISION}f} s"
-
 
     def __init__(
         self, mode: str, compressed_size="", decompressed_size="", ratio="", ingest_e2e_latency=""
@@ -89,22 +87,23 @@ class BenchmarkingResult:
             self.system_metric_results[metric] = SystemMetricResult(metric)
 
 
-
 class BenchmarkingEssentials:
     """
     Benchmarking environment data structure, stores the common information of the container
-    """    
-    
-    def __init__(self, 
-                 container_id: str, 
-                 reset_script_path: str,
-                 launch_script_path: str,
-                 measure_decompressed_size_script_path: str, 
-                 ingest_script_path: str,
-                 measure_compressed_size_script_path: str, 
-                 search_script_path: str,
-                 terminate_script_path: str, 
-                 dataset_path: str):
+    """
+
+    def __init__(
+        self,
+        container_id: str,
+        reset_script_path: str,
+        launch_script_path: str,
+        measure_decompressed_size_script_path: str,
+        ingest_script_path: str,
+        measure_compressed_size_script_path: str,
+        search_script_path: str,
+        terminate_script_path: str,
+        dataset_path: str,
+    ):
         self.container_id = container_id
         self.reset_script_path = reset_script_path
         self.__check_path(reset_script_path)
@@ -122,8 +121,7 @@ class BenchmarkingEssentials:
         self.__check_path(terminate_script_path)
         self.dataset_path = dataset_path
         self.__check_path(dataset_path)
-        
-    
+
     def __check_path(self, script_path: str):
         try:
             subprocess.run(
@@ -134,8 +132,7 @@ class BenchmarkingEssentials:
             logger.info(f"{script_path} exists in container {self.container_id}")
         except subprocess.CalledProcessError:
             raise Exception(f"{script_path} does not exist in container {self.container_id}")
-    
-    
+
 
 class ClpBenchExecutor:
     """
@@ -239,7 +236,6 @@ class ClpBenchExecutor:
             else:
                 raise Exception(f"{directory_path} does not exist in {container_id}: {e1}")
 
-
     def __set_thread_event_for_stage(self, stage: BenchmarkingStage):
         for it_stage in BenchmarkingStage:
             for it_metric in BenchmarkingSystemMetric:
@@ -250,19 +246,16 @@ class ClpBenchExecutor:
                     self.__system_metric_pollers[it_metric].stage_alteration_notifier.set()
                     self.__system_metric_pollers[it_metric].stage_alteration_notifier.clear()
 
-
     def __execute_script(self, script_path: str, args: List[str] = []) -> str:
         try:
-            logger.info(f"Executing script@{script_path} in container: {self.benchmarking_essentials.container_id}")
+            logger.info(
+                f"Executing script@{script_path} in container: {self.benchmarking_essentials.container_id}"
+            )
             command = f"docker exec {self.benchmarking_essentials.container_id} {script_path}"
             for arg in args:
                 command += f" {arg}"
             result = subprocess.run(
-                command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                shell=True,
-                check=True
+                command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, check=True
             )
             return result.stdout.decode("utf-8").strip()
         except subprocess.CalledProcessError as e:
@@ -271,33 +264,41 @@ class ClpBenchExecutor:
             )
             raise e
 
-
     def launch(self, mode: BenchmarkingMode):
         self.__execute_script(self.benchmarking_essentials.launch_script_path)
         if BenchmarkingMode.INGEST_MODE == mode:
             self.__execute_script(self.benchmarking_essentials.reset_script_path)
-            
-    
+
     def terminate(self, mode: BenchmarkingMode):
         self.__execute_script(self.benchmarking_essentials.terminate_script_path)
-    
-        
+
     def ingest(self, mode: BenchmarkingMode):
         self.__set_thread_event_for_stage(BenchmarkingStage.INGEST)
         self.benchmarking_results[mode].decompressed_size = BenchmarkingResult.get_mb_from_byte(
-            int(self.__execute_script(self.benchmarking_essentials.measure_decompressed_size_script_path))
+            int(
+                self.__execute_script(
+                    self.benchmarking_essentials.measure_decompressed_size_script_path,
+                    [self.benchmarking_essentials.dataset_path],
+                )
+            )
         )
         start_ts = time.perf_counter_ns()
-        self.__execute_script(self.benchmarking_essentials.ingest_script_path)
+        self.__execute_script(
+            self.benchmarking_essentials.ingest_script_path,
+            [self.benchmarking_essentials.dataset_path],
+        )
         end_ts = time.perf_counter_ns()
         self.benchmarking_results[mode].compressed_size = BenchmarkingResult.get_mb_from_byte(
-            int(self.__execute_script(self.benchmarking_essentials.measure_compressed_size_script_path))
+            int(
+                self.__execute_script(
+                    self.benchmarking_essentials.measure_compressed_size_script_path
+                )
+            )
         )
         self.benchmarking_results[mode].ingest_e2e_latency = BenchmarkingResult.get_s_from_ns(
             end_ts - start_ts
         )
-        
-        
+
     def run_query_benchmark(self, mode: BenchmarkingMode):
         self.__set_thread_event_for_stage(BenchmarkingStage.RUN_QUERY_BENCHMARK)
         for query in self.queries:
@@ -314,14 +315,15 @@ class ClpBenchExecutor:
                 for i in range(self.hot_run_warm_up_times):
                     self.__execute_script(self.benchmarking_essentials.search_script_path, [query])
             start_ts = time.perf_counter_ns()
-            query_result = self.__execute_script(self.benchmarking_essentials.search_script_path, [query])
+            query_result = self.__execute_script(
+                self.benchmarking_essentials.search_script_path, [query]
+            )
             end_ts = time.perf_counter_ns()
             nr_matched_log_lines = int(query_result.stdout.decode("utf-8").strip())
             logger.info(f"Number of matched log lines: {nr_matched_log_lines}")
             self.benchmarking_results[mode].query_e2e_latencies.append(
                 BenchmarkingResult.get_s_from_ns(end_ts - start_ts)
             )
-        
 
     def visualize(self):
         for mode, result in self.benchmarking_results.items():
@@ -381,7 +383,6 @@ class ClpBenchExecutor:
                                 f"at {stage.value} stage: {average_metric_result}{metric.value[1]}"
                             )
 
-
     def __load_system_metric_polling_config(self, metric: BenchmarkingSystemMetric):
         for stage in BenchmarkingStage:
             interval = (
@@ -394,7 +395,6 @@ class ClpBenchExecutor:
                 f"{metric.value[0].capitalize()} usage polling interval for {stage.value}: "
                 f"{interval} seconds"
             )
-
 
     def __load_benchmarking_essentials_config(self, asset_path: str):
         config_path = f"{asset_path}/config.yaml"
@@ -417,7 +417,6 @@ class ClpBenchExecutor:
         self.hot_run_warm_up_times: int = config.get("hot_run_warm_up_times", 3)
         self.related_processes: List[str] = config["related_processes"]
 
-
     def __record_system_metric_polling_sample(
         self, metric: BenchmarkingSystemMetric, mode: BenchmarkingMode
     ):
@@ -438,14 +437,13 @@ class ClpBenchExecutor:
                 )
                 break  # Only one stage's event should be set at any time
 
-
     def __acquire_system_metric_sample(self, metric: BenchmarkingSystemMetric) -> int:
         if BenchmarkingSystemMetric.MEMORY == metric:
             result = subprocess.run(
                 f"docker exec {self.benchmarking_essentials.container_id} ps aux",
                 stdout=subprocess.PIPE,
                 shell=True,
-                check=True
+                check=True,
             )
             output = result.stdout.decode("utf-8").strip().split("\n")
             metric_sample = 0
@@ -457,11 +455,9 @@ class ClpBenchExecutor:
         else:
             raise Exception(f"Unknown metric: {metric.value[0]}")
 
-
     def __poll_system_metrics(self, metric: BenchmarkingSystemMetric, mode: BenchmarkingMode):
         while self.__overall_threading_event.is_set():
             self.__record_system_metric_polling_sample(metric, mode)
-
 
     def start_polling_system_metric(self, metric: BenchmarkingSystemMetric, mode: BenchmarkingMode):
         if not self.config.get("system_metric", {}).get("enable", False):
@@ -489,7 +485,6 @@ class ClpBenchExecutor:
             self.__system_metric_pollers[metric].thread.start()
         else:
             logger.error(f"Already being polling {metric.value[0]} usage for mode {mode.value}")
-
 
     def stop_polling_system_metric(self, metric: BenchmarkingSystemMetric, mode: BenchmarkingMode):
         if not self.config.get("system_metric", {}).get("enable", False):

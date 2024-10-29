@@ -25,20 +25,28 @@ def load_benchmarking_assets(asset_path: str) -> ClpBenchExecutor:
 def ingest(executor: ClpBenchExecutor):
     logger.info("Ingesting data")
     try:
-        executor.start_polling_system_metric(BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE)
+        executor.start_polling_system_metric(
+            BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE
+        )
         executor.launch(BenchmarkingMode.INGEST_MODE)
         executor.ingest(BenchmarkingMode.INGEST_MODE)
     except Exception as e:
         logger.error(f"Failed to ingest in {BenchmarkingMode.INGEST_MODE.value} mode : {e}")
     finally:
-        executor.stop_polling_system_metric(BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE)
+        executor.stop_polling_system_metric(
+            BenchmarkingSystemMetric.MEMORY, BenchmarkingMode.INGEST_MODE
+        )
         try:
             executor.terminate(BenchmarkingMode.INGEST_MODE)
         except Exception as e:
-            logger.error(f"Failed to finish benchmark in {BenchmarkingMode.INGEST_MODE.value} mode: {e}")
+            logger.error(
+                f"Failed to finish benchmark in {BenchmarkingMode.INGEST_MODE.value} mode: {e}"
+            )
 
 
-def run_query_benchmark(executor: ClpBenchExecutor, mode: BenchmarkingMode = BenchmarkingMode.HOT_RUN_MODE):
+def run_query_benchmark(
+    executor: ClpBenchExecutor, mode: BenchmarkingMode = BenchmarkingMode.HOT_RUN_MODE
+):
     logger.info(f"Running benchmarking in {mode.value} mode")
     try:
         executor.start_polling_system_metric(BenchmarkingSystemMetric.MEMORY, mode)
@@ -60,11 +68,7 @@ def main():
     # Command line arguments parsing
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
-        "-a", 
-        "--asset", 
-        type=str,
-        required=True, 
-        help="The benchmarking asset location"
+        "-a", "--asset", type=str, required=True, help="The benchmarking asset location"
     )
     parser.add_argument(
         "-m",
