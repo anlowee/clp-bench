@@ -273,10 +273,10 @@ class ClpBenchExecutor:
 
 
     def launch(self, mode: BenchmarkingMode):
+        self.__execute_script(self.benchmarking_essentials.launch_script_path)
         if BenchmarkingMode.INGEST_MODE == mode:
             self.__execute_script(self.benchmarking_essentials.reset_script_path)
-        self.__execute_script(self.benchmarking_essentials.launch_script_path)
-        
+            
     
     def terminate(self, mode: BenchmarkingMode):
         self.__execute_script(self.benchmarking_essentials.terminate_script_path)
