@@ -102,7 +102,7 @@ class BenchmarkingEssentials:
         measure_compressed_size_script_path: str,
         search_script_path: str,
         terminate_script_path: str,
-        dataset_path: str,
+        datasets_path: str,
     ):
         self.container_id = container_id
         self.reset_script_path = reset_script_path
@@ -119,8 +119,8 @@ class BenchmarkingEssentials:
         self.__check_path(search_script_path)
         self.terminate_script_path = terminate_script_path
         self.__check_path(terminate_script_path)
-        self.dataset_path = dataset_path
-        self.__check_path(dataset_path)
+        self.datasets_path = datasets_path
+        self.__check_path(datasets_path)
 
     def __check_path(self, script_path: str):
         try:
@@ -278,14 +278,14 @@ class ClpBenchExecutor:
             int(
                 self.__execute_script(
                     self.benchmarking_essentials.measure_decompressed_size_script_path,
-                    [self.benchmarking_essentials.dataset_path],
+                    [self.benchmarking_essentials.datasets_path],
                 )
             )
         )
         start_ts = time.perf_counter_ns()
         self.__execute_script(
             self.benchmarking_essentials.ingest_script_path,
-            [self.benchmarking_essentials.dataset_path],
+            [self.benchmarking_essentials.datasets_path],
         )
         end_ts = time.perf_counter_ns()
         self.benchmarking_results[mode].compressed_size = BenchmarkingResult.get_mb_from_byte(
@@ -412,7 +412,7 @@ class ClpBenchExecutor:
             f"{assets_path_in_container}/measure_compressed_size_script",
             f"{assets_path_in_container}/search_script",
             f"{assets_path_in_container}/terminate_script",
-            config["dataset_path"],
+            config["datasets_path"],
         )
         self.queries: List[str] = config["queries"]
         self.hot_run_warm_up_times: int = config.get("hot_run_warm_up_times", 3)
