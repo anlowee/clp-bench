@@ -11,6 +11,7 @@ hot_run_warm_up_times: 3
 related_processes:
   - clickhouse-server
   - clickhouse-client
+  - clickhouse-watchd
 queries:
   - '"JSON_EXISTS(raw, ''$.attr.tickets'')"'
   - '"JSONExtractInt(raw, ''id'') = 22419"'
