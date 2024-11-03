@@ -1,0 +1,5 @@
+#!/bin/bash
+
+data_path=/home/archives
+
+mkdir -p "${data_path}"
