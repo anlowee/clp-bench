@@ -1,0 +1,20 @@
+system_metric:
+  enable: True
+  memory:
+    ingest_polling_interval: 10
+    run_query_benchmark_polling_interval: 10
+
+mongodb:
+  container_id: mongodb-clp-bench
+  launch_script_path: /home/assets/start-mongodb.sh
+  ingest_script_path: /home/assets/ingest.sh
+  search_script_path: /home/assets/search.sh
+  terminate_script_path: /home/assets/stop-mongodb.sh
+  dataset_path: /home/datasets/mongod.log
+  queries:
+    - '{ "attr.tickets": { "$exists": true}}'
+    - '{"id": {"$eq": 22419}}'
+    - '{"attr.message.msg": {"$regex": "^log_release"}, "attr.message.session_name": "connection"}'
+    - '{"ctx": "initandlisten", "$or": [{"msg": {"$exists": true, "$ne": "WiredTiger message"}}, {"attr.message.msg": {"$regex": "^log_remove"}}]}'
+    - '{"c": "WTWRTLOG", "attr.message.ts_sec": {"$gt": 1679490000}}'
+    - '{"ctx": "FlowControlRefresher", "attr.numTrimmed": {"$eq": 0}}'
