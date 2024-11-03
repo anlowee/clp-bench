@@ -258,6 +258,7 @@ class ClpBenchExecutor:
             result = subprocess.run(
                 command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, check=True
             )
+            logger.debug(result)
             return result.stdout.decode("utf-8").strip()
         except subprocess.CalledProcessError as e:
             logger.error(

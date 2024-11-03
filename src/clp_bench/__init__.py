@@ -1,5 +1,4 @@
 import argparse
-import importlib
 import logging
 import traceback
 
@@ -78,10 +77,16 @@ def main():
         required=True,
         help="The benchmarking mode",
     )
+    parser.add_argument("-d", "--debug", action="store_true")
     parser.add_argument("-v", "--version", action="version", version=f"{VERSION}")
     args = parser.parse_args()
     logger.info(f"The benchmarking asset location: {args.asset}")
     logger.info(f"The benchmarking mode: {args.mode}")
+    
+    if (args.debug):
+        logger.info("Enable DEBUG mode")
+        logger.setLevel(logging.DEBUG)
+    
 
     # Load corresponding implementation for executor's SPI
     try:
