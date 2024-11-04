@@ -3,7 +3,7 @@ import json
 import logging
 import requests
 from elasticsearch import Elasticsearch
-from elasticsearch.helpers import streaming_bulk
+from elasticsearch.helpers import streaming_bulk # type: ignore
 import sys
 
 collection_name='elasticsearch_clp_bench'
