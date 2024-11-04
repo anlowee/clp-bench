@@ -1,5 +1,4 @@
 #!/bin/bash
-chown -R elasticsearch:elasticsearch /var/lib/elasticsearch
 
 sed -i 's/#http.port: 9200/http.port: 9202/' /etc/elasticsearch/elasticsearch.yml
 sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
