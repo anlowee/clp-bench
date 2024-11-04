@@ -123,7 +123,7 @@ class BenchmarkingEssentials:
         self.terminate_script_path = terminate_script_path
         self.__check_path(terminate_script_path)
         self.datasets_path = datasets_path
-        self.__check_path(datasets_path)
+        # Since datasets_path could also be pattern, we don't check its existence
 
     def __check_path(self, script_path: str):
         try:
