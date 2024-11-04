@@ -82,11 +82,10 @@ def main():
     args = parser.parse_args()
     logger.info(f"The benchmarking asset location: {args.asset}")
     logger.info(f"The benchmarking mode: {args.mode}")
-    
-    if (args.debug):
+
+    if args.debug:
         logger.info("Enable DEBUG mode")
         logger.setLevel(logging.DEBUG)
-    
 
     # Load corresponding implementation for executor's SPI
     try:
