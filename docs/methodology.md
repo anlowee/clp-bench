@@ -122,9 +122,26 @@ The benchmark currently tests the following tools:
 # Workflow
 
 clp-bench divides the benchmarking into two parts: **ingest** and **query benchmarking**. The 
-workflows of these two are as follow:
-![ingest-mode-flowchart]
-![query-benchmarking-flowchart]
+workflow of ingesting data:
+```mermaid
+flowchart TD
+    Launch --> Reset
+    Reset -->|Measure raw data size;<br>Set start timestamp.| Ingest
+    Ingest -->|Measure compressed data size;<br>Set end timestamp.| Terminate
+```
+
+The workflow of query benchmarking:
+```mermaid
+flowchart TD
+    A[Launch] -->|Hot run| B[Warmup Cache]
+    A -->|Cold run| C[Clear Cache]
+    B --> D[Execute Query]
+    C --> D
+    D -->|Set start timestamp| D
+    D --> E[Terminate]
+    D -->|Set end timestamp| E
+    D -.->|Polling memory usage| D
+```
 
 [hadoop-14TB]: https://zenodo.org/records/7114847
 [mongodb]: https://zenodo.org/records/11075361
@@ -152,6 +169,3 @@ workflows of these two are as follow:
 
 [ClickHouse]: https://clickhouse.com/
 [ClickHouse-methodology]: ../assets/semi-structured/clickhouse/methodology.md
-
-[ingest-mode-flowchart]: ingest-mode-flowchart.pdf
-[query-benchmarking-flowchart]: query-benchmarking-flowchart.pdf 
