@@ -43,4 +43,13 @@ ${datasets}/worker3/yarn-root-nodemanager-8ed8bf9ebb0e.out.1
 ${datasets}/worker3/yarn-root-nodemanager-8ed8bf9ebb0e.out.2
 ${datasets}/worker3/yarn-root-nodemanager-8ed8bf9ebb0e.out.3
 ```
-The total size of these files is 1.33 GB. The remaining 1.63 GB of missing data is currently unexplained.
+The total size of these files is 1.33 GB. The missing log lines from these non-ingested files contribute to discrepancies in the results of the following queries:
+
+| Query | Actual Result | Expected Result | Difference |
+|-------|---------------|-----------------|------------|
+| Q3    | 492,017       | 513,893         | 21,876     |
+| Q4    | 779,891       | 810,033         | 30,142     |
+| Q9    | 1,555,133     | 1,623,002       | 67,869     |
+| Q12   | 170,468       | 178,076         | 7,608      |
+
+The remaining 1.63 GB of missing data is still unaccounted for, but they seems to have no impact on the query results (because the non-ingested files cover those).
