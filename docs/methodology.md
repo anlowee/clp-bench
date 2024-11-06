@@ -113,6 +113,7 @@ The benchmark currently tests the following tools:
   + [CLP][glt] (📐[methodology][glt-methodology]). Specifically, the `glt` binary.
   + [Elasticsearch] (📐[methodology][Elasticsearch-unstructured-methodology]).
   + [Loki] (📐[methodology][Loki-methodology]).
+  + [Splunk] (📐[methodology][Splunk-methodology]).
   + `grep` (📐[methodology][grep-methodology]).
 * For semi-structured logs:
   + [CLP-S][clp-s] (📐[methodology][clp-s-methodology]).
@@ -135,12 +136,9 @@ The workflow of query benchmarking:
 flowchart TD
     A[Launch] -->|Hot run| B[Warmup Cache]
     A -->|Cold run| C[Clear Cache]
-    B --> D[Execute Query]
-    C --> D
-    D -->|Set start timestamp| D
-    D --> E[Terminate]
-    D -->|Set end timestamp| E
-    D -.->|Polling memory usage| D
+    B -->|Start polling system metric;<br>Set start timestamp.| D[Execute Query]
+    C -->|Start polling system metric;<br>Set start timestamp.| D
+    D -->|Set end timestamp.| Terminate 
 ```
 
 [hadoop-14TB]: https://zenodo.org/records/7114847
@@ -156,6 +154,9 @@ flowchart TD
 
 [Loki]: https://grafana.com/oss/loki/
 [Loki-methodology]: ../assets/unstructured/loki🚧/methodology.md
+
+[Splunk]: https://www.splunk.com/
+[Splunk-methodology]: ../assets/unstructured/splunk/methodology.md
 
 [grep-methodology]: ../assets/unstructured/grep/methodology.md
 
