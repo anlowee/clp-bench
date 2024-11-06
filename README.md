@@ -63,6 +63,20 @@ To benchmark a new system, duplicate one of the directories in [assets] and upda
 
 - **`methodology.md`**: Describes specific benchmarking setup details, including tuning and dataset preprocessing.
 
+- **`results.json`**: Contains benchmarking results, which are loaded and displayed in the UI:
+    - **`target`**: The ID used by the frontend, should be in lowercase. IDs of the same type must be unique.
+    - **`targetDisplayedName`**: The name to display in the column on the webpage.
+    - **`displayedOrder`**: Defines the display order of results; a smaller value places the column further to the right.
+    - **`isEnable`**: Indicates if the results should be displayed (default is `true`). If set to `false`, results won’t appear on the webpage.
+    - **`type`**: Specifies data type (1 for Unstructured, 2 for Semi-structured).
+    - **`ingestTime`**: Total end-to-end time taken to ingest all dataset data.
+    - **`compressedSize`**: The size of compressed data archives.
+    - **`avgIngestMem`**: The average memory used during data ingestion.
+    - **`metrics`**: An array of query benchmarking results for each metric:
+        - **`metric`**: Specifies the type (1 for Hot run, 2 for Cold run).
+        - **`avgQueryMem`**: The average memory usage during query benchmarking.
+        - **`queryTimes`**: An array of end-to-end query latencies, ordered to match the sequence of queries.
+
 [CLP]: https://github.com/y-scope/clp
 [ui]: ui
 [assets]: assets

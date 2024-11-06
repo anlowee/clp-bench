@@ -53,4 +53,6 @@ There is a template `.env` file in this directory. To create a custom configurat
 `.env` to `.env.local` and modify the content, which will override the settings in `.env`.
 
 # Benchmarking Results Database
-We use `sqlite` to manage a mini-database that contains all benchmarking results.
+We use `sqlite` to manage a mini-database that contains all benchmarking results. `load_results.py` 
+automatically loads benchmarking results from the `results.json` file under the directory of each 
+target tool.
