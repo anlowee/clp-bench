@@ -538,7 +538,7 @@ class ClpBenchExecutor:
                             )
                             logger.info(
                                 f"{mode.value.capitalize()} mode: average {metric.value[0]} usage "
-                                f"at {stage.value} stage: {average_metric_result}{metric.value[1]}"
+                                f"at {stage.value} stage: {average_metric_result} {metric.value[1]}"
                             )
 
     def start_polling_system_metric(self, metric: BenchmarkingSystemMetric, mode: BenchmarkingMode):
@@ -728,7 +728,7 @@ class ClpBenchExecutor:
                 ].append(metric_sample)
                 logger.info(
                     f"Current {metric.value[0]} usage at {stage.value} stage: {metric_sample}"
-                    f"{metric.value[1]}"
+                    f" {metric.value[1]}"
                 )
                 self.__system_metric_pollers[metric].stage_alteration_notifier.wait(
                     self.__system_metric_pollers[metric].stage_polling_intervals[stage]
@@ -764,7 +764,12 @@ class ClpBenchExecutor:
             metric_sample = 0
             for line in output:
                 process = line.strip().split()[10].strip()
-                if process in self.__related_processes:
+                flag = False
+                for related_process in self.__related_processes:
+                    if related_process.startswith(process):
+                        flag = True
+                        break
+                if flag:
                     metric_sample += int(line.strip().split()[5]) * KB_TO_B
             return metric_sample
         else:

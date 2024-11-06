@@ -1,0 +1,50 @@
+{
+    "target": "splunk",
+    "targetDisplayedName": "Splunk",
+    "displayedOrder": 4,
+    "isEnable": true,
+    "type": 1,
+    "ingestTime": 33715700,
+    "compressedSize": 95477751808,
+    "avgIngestMem": 702476288,
+    "metrics": [
+        {
+            "metric": 1,
+            "avgQueryMem": 838852849,
+            "queryTimes": [
+                1193,
+                1446,
+                41619,
+                38373,
+                1384,
+                6673,
+                233019,
+                9591,
+                15662,
+                1202,
+                1121,
+                11808,
+                907
+            ]
+        },
+        {
+            "metric": 2,
+            "avgQueryMem": 750099056,
+            "queryTimes": [
+                44343,
+                150891,
+                234429,
+                191793,
+                21255,
+                166367,
+                646517,
+                130999,
+                189195,
+                20502,
+                5823,
+                167337,
+                3016
+            ]
+        }
+    ]
+}
