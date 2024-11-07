@@ -15,6 +15,11 @@ if test -e /opt/splunk/ftr; then
     echo "BREAK_ONLY_BEFORE_DATE = false" >> /opt/splunk/etc/apps/SplunkDeploymentServerConfig/default/props.conf
     echo "SHOULD_LINEMERGE = false" >> /opt/splunk/etc/apps/SplunkDeploymentServerConfig/default/props.conf
 
+    echo "" >> /opt/splunk/etc/apps/SplunkDeploymentServerConfig/default/inputs.conf
+    echo "[default]" >> /opt/splunk/etc/apps/SplunkDeploymentServerConfig/default/inputs.conf
+    echo "crcSalt = <SOURCE>" >> /opt/splunk/etc/apps/SplunkDeploymentServerConfig/default/inputs.conf
+    echo "move_policy = sinkhole" >> /opt/splunk/etc/apps/SplunkDeploymentServerConfig/default/inputs.conf
+
 
     /opt/splunk/bin/splunk start --no-prompt --answer-yes --accept-license
 else
