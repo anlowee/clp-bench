@@ -237,8 +237,8 @@ const ColoredCell = ({ params, type, metric }: { params: GridCellParams, type: s
             redValue = 255;
             greenValue = 255 * (1 - (ratio - 0.3333) / 0.3333);
         } else {
-            // Change from red to dark (255, 0, 0) to dark (0, 0, 0)
-            redValue = 255 * (1 - (ratio - 0.6666) / 0.3333);
+            // Change from red to dark (255, 0, 0) to dark red (128, 0, 0)
+            redValue = 64 + 192 * (1 - (ratio - 0.6666) / 0.3333);
             greenValue = 0
         }
     

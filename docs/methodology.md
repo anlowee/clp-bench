@@ -113,6 +113,7 @@ The benchmark currently tests the following tools:
   + [CLP][glt] (📐[methodology][glt-methodology]). Specifically, the `glt` binary.
   + [Elasticsearch] (📐[methodology][Elasticsearch-unstructured-methodology]).
   + [Loki] (📐[methodology][Loki-methodology]).
+  + [Splunk] (📐[methodology][Splunk-methodology]).
   + `grep` (📐[methodology][grep-methodology]).
 * For semi-structured logs:
   + [CLP-S][clp-s] (📐[methodology][clp-s-methodology]).
@@ -122,9 +123,23 @@ The benchmark currently tests the following tools:
 # Workflow
 
 clp-bench divides the benchmarking into two parts: **ingest** and **query benchmarking**. The 
-workflows of these two are as follow:
-![ingest-mode-flowchart]
-![query-benchmarking-flowchart]
+workflow of ingesting data:
+```mermaid
+flowchart TD
+    Launch --> Reset
+    Reset -->|Measure raw data size;<br>Set start timestamp.| Ingest
+    Ingest -->|Measure compressed data size;<br>Set end timestamp.| Terminate
+```
+
+The workflow of query benchmarking:
+```mermaid
+flowchart TD
+    A[Launch] -->|Hot run| B[Warmup Cache]
+    A -->|Cold run| C[Clear Cache]
+    B -->|Start polling system metric;<br>Set start timestamp.| D[Execute Query]
+    C -->|Start polling system metric;<br>Set start timestamp.| D
+    D -->|Set end timestamp.| Terminate 
+```
 
 [hadoop-14TB]: https://zenodo.org/records/7114847
 [mongodb]: https://zenodo.org/records/11075361
@@ -140,6 +155,9 @@ workflows of these two are as follow:
 [Loki]: https://grafana.com/oss/loki/
 [Loki-methodology]: ../assets/unstructured/loki🚧/methodology.md
 
+[Splunk]: https://www.splunk.com/
+[Splunk-methodology]: ../assets/unstructured/splunk/methodology.md
+
 [grep-methodology]: ../assets/unstructured/grep/methodology.md
 
 [clp-s]: https://docs.yscope.com/clp/main/user-guide/core-clp-s.html
@@ -152,6 +170,3 @@ workflows of these two are as follow:
 
 [ClickHouse]: https://clickhouse.com/
 [ClickHouse-methodology]: ../assets/semi-structured/clickhouse/methodology.md
-
-[ingest-mode-flowchart]: ingest-mode-flowchart.pdf
-[query-benchmarking-flowchart]: query-benchmarking-flowchart.pdf 
