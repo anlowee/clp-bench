@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+collection_name=mongodb_clp_bench
+
+sleep 10
+mongosh logs --eval "'db.${collection_name}.storageSize().toString()'"

@@ -133,7 +133,7 @@ class BenchmarkingResult:
             str: The formatted file size as a string with units in B.
         """
 
-        return f"{byte}:.{BenchmarkingResult.SIZE_PRECISION}f B"
+        return f"{byte:.{BenchmarkingResult.SIZE_PRECISION}f} B"
 
     @staticmethod
     def format_latency_result(ns: int) -> str:
@@ -613,14 +613,14 @@ class ClpBenchExecutor:
         assets_path_in_container = config["assets_path"]
         self.__benchmarking_essentials = BenchmarkingEssentials(
             config["container_id"],
-            f"{assets_path_in_container}/reset_script",
-            f"{assets_path_in_container}/launch_script",
-            f"{assets_path_in_container}/measure_decompressed_size_script",
-            f"{assets_path_in_container}/ingest_script",
-            f"{assets_path_in_container}/measure_compressed_size_script",
-            f"{assets_path_in_container}/clear_cache_script",
-            f"{assets_path_in_container}/search_script",
-            f"{assets_path_in_container}/terminate_script",
+            f"{assets_path_in_container}/reset-script.sh",
+            f"{assets_path_in_container}/launch-script.sh",
+            f"{assets_path_in_container}/measure-decompressed-size-script.sh",
+            f"{assets_path_in_container}/ingest-script.sh",
+            f"{assets_path_in_container}/measure-compressed-size-script.sh",
+            f"{assets_path_in_container}/clear-cache-script.sh",
+            f"{assets_path_in_container}/search-script.sh",
+            f"{assets_path_in_container}/terminate-script.sh",
             config["datasets_path"],
         )
         self.__queries: List[str] = config["queries"]
@@ -682,7 +682,9 @@ class ClpBenchExecutor:
                 f"Executing script@{script_path} in container: "
                 f"{self.__benchmarking_essentials.container_id}"
             )
-            command = f"docker exec {self.__benchmarking_essentials.container_id} {script_path}"
+            command = (
+                f"docker exec {self.__benchmarking_essentials.container_id} bash {script_path}"
+            )
             for arg in args:
                 command += f" {arg}"
             result = subprocess.run(

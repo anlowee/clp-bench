@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/opt/splunk/bin/splunk search '| dbinspect index=main | stats sum(rawSize)' -auth "admin:admin_password" 2>/dev/null | awk 'END {print $1}'

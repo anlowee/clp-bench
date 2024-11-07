@@ -143,7 +143,7 @@ curl -G http://localhost:3100/metrics | \
 
 # Query Benchmarking
 
-The configuration of query benchmarking is in `search_script` .
+The configuration of query benchmarking is in `search.py` .
 
 Note that in the configuration: 
 * `job` should match the `job` of the `labels` in the `promtail-config.yaml` (see the example

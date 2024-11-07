@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/opt/splunk/bin/splunk add monitor "$1" -auth "admin:admin_password"

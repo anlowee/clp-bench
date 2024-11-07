@@ -33,33 +33,33 @@ To benchmark a new system, duplicate one of the directories in [assets] and upda
     - **`system_metric.memory.ingest_polling_interval`**: Time interval (in seconds) for polling memory during data ingestion.
     - **`system_metric.memory.run_query_benchmark_polling_interval`**: Time interval (in seconds) for polling memory during query benchmarking.
     - **`container_id`**: Identifier for the benchmark container, generally named as `${tool}-clp-bench`.
-    - **`assets_path`**: Path to the assets directory in the container. Leave as default unless modifying `docker_run` (described below).
+    - **`assets_path`**: Path to the assets directory in the container. Leave as default unless modifying `docker-run.sh` (described below).
     - **`datasets_path`**: Path for datasets in the container; may refer to a file, directory, or file pattern. clp-bench does not validate dataset presence.
     - **`hot_run_warm_up_times`**: Number of repetitions for query warm-up in hot run mode before measuring latency. This may be automated in the future.
     - **`related_processes`**: List of command substrings (from `ps aux`) to track relevant memory usage.
     - **`queries`**: Array of queries for benchmarking; carefully handle escape characters.
 
-- **`docker_build`**: Builds the container as per the `Dockerfile` in the same directory. Usually, only the `container_name` variable should be adjusted to match the `container_id` in `config.yaml`.
+- **`docker-build.sh`**: Builds the container as per the `Dockerfile` in the same directory. Usually, only the `container_name` variable should be adjusted to match the `container_id` in `config.yaml`.
 
-- **`docker_run`**: Runs the container, taking the dataset path as an argument. Typically, only the `container_name` variable needs alignment with `container_id` in `config.yaml`.
+- **`docker-run.sh`**: Runs the container, taking the dataset path as an argument. Typically, only the `container_name` variable needs alignment with `container_id` in `config.yaml`.
 
 - **`Dockerfile`**: Used for building the container, ensuring installation of the required tool and dependencies.
 
-- **`launch_script`**: Initializes and starts the tool (e.g., if it functions as a server or service).
+- **`launch-script.sh`**: Initializes and starts the tool (e.g., if it functions as a server or service).
 
-- **`reset_script`**: Prepares a clean environment by removing previous data (e.g., dropping tables); runs after `launch_script` in `ingest` mode.
+- **`reset-script.sh`**: Prepares a clean environment by removing previous data (e.g., dropping tables); runs after `launch-script.sh` in `ingest` mode.
 
-- **`measure_decompressed_size_script`**: Measures the raw dataset size before ingestion. Typically unchanged, it takes `datasets_path` from `config.yaml` and uses `du -bc` for size calculation in bytes.
+- **`measure-decompressed-size-script.sh`**: Measures the raw dataset size before ingestion. Typically unchanged, it takes `datasets_path` from `config.yaml` and uses `du -bc` for size calculation in bytes.
 
-- **`ingest_script`**: Handles data ingestion, with clp-bench measuring the total latency of this script. Avoid adding extra operations.
+- **`ingest-script.sh`**: Handles data ingestion, with clp-bench measuring the total latency of this script. Avoid adding extra operations.
 
-- **`measure_compressed_size_script`**: Measures the compressed data size post-ingestion, usually via tool-specific methods.
+- **`measure-compressed-size-script.sh`**: Measures the compressed data size post-ingestion, usually via tool-specific methods.
 
-- **`search_script`**: Executes queries specified in `config.yaml`. clp-bench supports two benchmarking modes:
+- **`search-script.sh`**: Executes queries specified in `config.yaml`. clp-bench supports two benchmarking modes:
     - **Hot run mode**: Runs queries for `hot_run_warm_up_times` to warm up the cache, then measures latency.
-    - **Cold run mode**: Clears the cache with `clear_cache_script` before measuring latency.
+    - **Cold run mode**: Clears the cache with `clear-cache-script.sh` before measuring latency.
 
-- **`clear_cache_script`**: Clears the tool’s cache, essential for cold runs.
+- **`clear-cache-script.sh`**: Clears the tool’s cache, essential for cold runs.
 
 - **`methodology.md`**: Describes specific benchmarking setup details, including tuning and dataset preprocessing.
 
@@ -77,6 +77,6 @@ To benchmark a new system, duplicate one of the directories in [assets] and upda
         - **`avgQueryMem`**: The average memory usage during query benchmarking.
         - **`queryTimes`**: An array of end-to-end query latencies, ordered to match the sequence of queries.
 
+[assets]: assets
 [CLP]: https://github.com/y-scope/clp
 [ui]: ui
-[assets]: assets
