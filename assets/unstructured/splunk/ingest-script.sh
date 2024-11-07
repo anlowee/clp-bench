@@ -6,7 +6,7 @@ nr_log_files=$(find datasets/ -type f -name "*log*" | wc -l)
 while true; do
     count=$(grep "Batch input finished reading file=" /opt/splunk/var/log/splunk/splunkd.log | grep "$1" | sed -n "s/.*file='\([^']*\)'.*/\1/p" | wc -l)
     
-    if [ "$count" -eq nr_log_files ]; then
+    if [ "$count" -eq "${nr_log_files}" ]; then
         exit 0
     fi
     
