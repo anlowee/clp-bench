@@ -16,7 +16,10 @@ related_processes:
 queries:
   - '''{ "attr.tickets": { "$exists": true}}'''
   - '''{"id": {"$eq": 22419}}'''
-  - '''{"attr.message.msg": {"$regex": "^log_release"}, "attr.message.session_name": "connection"}'''
-  - '''{"ctx": "initandlisten", "$or": [{"msg": {"$exists": true, "$ne": "WiredTiger message"}}, {"attr.message.msg": {"$regex": "^log_remove"}}]}'''
+  - >
+    '{"attr.message.msg": {"$regex": "^log_release"}, "attr.message.session_name": "connection"}'
+  - >
+    '{"ctx": "initandlisten", "$or": [{"msg": {"$exists": true, "$ne": "WiredTiger message"}}, {
+    "attr.message.msg": {"$regex": "^log_remove"}}]}'
   - '''{"c": "WTWRTLOG", "attr.message.ts_sec": {"$gt": 1679490000}}'''
   - '''{"ctx": "FlowControlRefresher", "attr.numTrimmed": {"$eq": 0}}'''

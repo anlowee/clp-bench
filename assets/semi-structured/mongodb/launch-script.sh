@@ -9,7 +9,12 @@ fi
 mkdir -p /data/db
 
 # Start MongoDB with specified options
-mongod --fork --syslog --wiredTigerCollectionBlockCompressor zstd --zstdDefaultCompressionLevel 3 >/dev/null 2>&1
+mongod \
+    --fork \
+    --syslog \
+    --wiredTigerCollectionBlockCompressor zstd \
+    --zstdDefaultCompressionLevel 3 \
+    >/dev/null 2>&1
 
 # Wait for 2 seconds to ensure MongoDB starts
 sleep 2
