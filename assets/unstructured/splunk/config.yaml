@@ -18,7 +18,9 @@ related_processes:
 queries:
   - '" org.apache.hadoop.hdfs.server.common.Storage: Analyzing storage directories for bpid "'
   - '" org.apache.hadoop.hdfs.server.datanode.DataNode: DataTransfer, at "'
-  - '" INFO org.apache.hadoop.yarn.server.nodemanager.containermanager.container.ContainerImpl: Container "'
+  - >
+    " INFO org.apache.hadoop.yarn.server.nodemanager.containermanager.container.ContainerImpl:
+    Container "
   - '" DEBUG org.apache.hadoop.mapred.ShuffleHandler: verifying request. enc_str\="'
   - '" to pid 21177 as user "'
   - '" 10000 reply: "'
