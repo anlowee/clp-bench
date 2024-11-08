@@ -15,7 +15,15 @@ related_processes:
 queries:
   - '"JSON_EXISTS(raw, ''$.attr.tickets'')"'
   - '"JSONExtractInt(raw, ''id'') = 22419"'
-  - '"JSON_VALUE(raw, ''$.attr.message.msg'') like ''log_release%'' AND JSON_VALUE(raw, ''$.attr.message.session_name'') = ''connection''"'
-  - '"JSON_VALUE(raw, ''$.ctx'') = ''initandlisten'' AND (JSON_VALUE(raw, ''$.attr.message.msg'') like ''log_remove%'' OR JSON_VALUE(raw, ''$.msg'') != ''WiredTiger message'')"'
-  - '"JSON_VALUE(raw, ''$.c'') = ''WTWRTLOG'' and JSONExtractInt(JSONExtractString(JSONExtractString(raw, ''attr''), ''message''), ''ts_sec'')  > 1679490000"'
-  - '"JSON_VALUE(raw, ''$.ctx'') = ''FlowControlRefresher'' AND JSONExtractInt(JSONExtractString(raw, ''attr''), ''numTrimmed'') = 0 "'
+  - >
+    "JSON_VALUE(raw, '$.attr.message.msg') like 'log_release%' AND JSON_VALUE(raw, '$.attr.
+    message.session_name') = 'connection'"
+  - >
+    "JSON_VALUE(raw, '$.ctx') = 'initandlisten' AND (JSON_VALUE(raw, '$.attr.message.msg') 
+    like 'log_remove%' OR JSON_VALUE(raw, '$.msg') != 'WiredTiger message')"
+  - >
+    "JSON_VALUE(raw, '$.c') = 'WTWRTLOG' and JSONExtractInt(JSONExtractString(
+    JSONExtractString(raw, 'attr'), 'message'), 'ts_sec')  > 1679490000"
+  - >
+    "JSON_VALUE(raw, '$.ctx') = 'FlowControlRefresher' AND JSONExtractInt(JSONExtractString(
+    raw, 'attr'), 'numTrimmed') = 0 "
