@@ -1,4 +1,4 @@
-First, download the latest released binary, or clone the latest [code][CLP] and compile it locally 
+First, download the latest released binary, or clone the latest [code][CLP] and compile it locally
 by following these [instructions][core-build]. Then we use `glt` binary.
 
 No preprocessing is needed for the raw data.

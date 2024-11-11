@@ -81,13 +81,13 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-- job_name: system
-  static_configs:
-  - targets:
-      - localhost
-    labels:
-      job: benchlogs
-      __path__: /mnt/datasets/hadoop/worker*/*
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: benchlogs
+          __path__: /mnt/datasets/hadoop/worker*/*
 ```
 
 Note that `__path__` should be the pattern of directories which contain the log files.
@@ -145,14 +145,15 @@ curl -G http://localhost:3100/metrics | \
 
 The configuration of query benchmarking is in `search.py` .
 
-Note that in the configuration: 
-* `job` should match the `job` of the `labels` in the `promtail-config.yaml` (see the example
-  of `promtail-config.yaml` ).
-* `limit` should be at least the maximum number of matched log lines of the query.
-* `batch` is maximum number of matched log lines that Loki will send to the client at once.
-* `from_ts` and `to_ts` define the rough wall-clock time range of ingesting data. In this example, it
-  means that data ingestion happened between `2024-10-08T10:00:00Z` and `2024-10-09T10:00:00Z` .
-* `interval` defines the time range, in minutes, that Loki will use to query log lines ingested
+Note that in the configuration:
+
+- `job` should match the `job` of the `labels` in the `promtail-config.yaml` (see the example of
+  `promtail-config.yaml` ).
+- `limit` should be at least the maximum number of matched log lines of the query.
+- `batch` is maximum number of matched log lines that Loki will send to the client at once.
+- `from_ts` and `to_ts` define the rough wall-clock time range of ingesting data. In this example,
+  it means that data ingestion happened between `2024-10-08T10:00:00Z` and `2024-10-09T10:00:00Z` .
+- `interval` defines the time range, in minutes, that Loki will use to query log lines ingested
   within that period. For example, setting an interval of 30 means the time range between from and
   to will be divided into 30-minute slices. Loki will run the query on log lines ingested during
   each of these slices. For each query, `clp-bench` instructs Loki to execute the query across all
