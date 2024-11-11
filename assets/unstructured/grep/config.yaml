@@ -1,5 +1,5 @@
 system_metric:
-  enable: True
+  enable: true
   memory:
     ingest_polling_interval: 5
     run_query_benchmark_polling_interval: 5
