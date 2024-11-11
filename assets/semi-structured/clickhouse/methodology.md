@@ -6,6 +6,6 @@ For query benchmarking, we operate in [single-thread mode][max_threads] by setti
 [minimum data volume required for direct I/O access][direct_io] to 1 byte
 (`min_bytes_to_use_direct_io = 1`) on the storage disk.
 
+[direct_io]: https://clickhouse.com/docs/en/operations/settings/settings#min_bytes_to_use_direct_io
 [jsonasstring]: https://clickhouse.com/docs/en/interfaces/formats#jsonasstring
 [max_threads]: https://clickhouse.com/docs/en/operations/settings/settings#max_threads
-[direct_io]: https://clickhouse.com/docs/en/operations/settings/settings#min_bytes_to_use_direct_io

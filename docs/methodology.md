@@ -145,22 +145,22 @@ flowchart TD
     D -->|Set end timestamp.| Terminate
 ```
 
-[hadoop-14TB]: https://zenodo.org/records/7114847
-[mongodb]: https://zenodo.org/records/11075361
-[CLP]: https://github.com/y-scope/clp
-[glt]: https://docs.yscope.com/clp/main/user-guide/core-unstructured/glt.html
-[glt-methodology]: ../assets/unstructured/glt/methodology.md
-[Elasticsearch]: https://www.elastic.co/downloads/elasticsearch
-[Elasticsearch-unstructured-methodology]: ../assets/unstructured/elasticsearch/methodology.md
-[Loki]: https://grafana.com/oss/loki/
-[Loki-methodology]: ../assets/unstructured/loki🚧/methodology.md
-[Splunk]: https://www.splunk.com/
-[Splunk-methodology]: ../assets/unstructured/splunk/methodology.md
-[grep-methodology]: ../assets/unstructured/grep/methodology.md
-[clp-s]: https://docs.yscope.com/clp/main/user-guide/core-clp-s.html
-[clp-s-methodology]: ../assets/semi-structured/clp-s/methodology.md
-[Elasticsearch-semi-structured-methodology]: ../assets/semi-structured/elasticsearch/methodology.md
-[MongoDB]: https://www.mongodb.com/
-[MongoDB-methodology]: ../assets/semi-structured/mongodb/methodology.md
 [ClickHouse]: https://clickhouse.com/
 [ClickHouse-methodology]: ../assets/semi-structured/clickhouse/methodology.md
+[CLP]: https://github.com/y-scope/clp
+[clp-s]: https://docs.yscope.com/clp/main/user-guide/core-clp-s.html
+[clp-s-methodology]: ../assets/semi-structured/clp-s/methodology.md
+[Elasticsearch]: https://www.elastic.co/downloads/elasticsearch
+[Elasticsearch-semi-structured-methodology]: ../assets/semi-structured/elasticsearch/methodology.md
+[Elasticsearch-unstructured-methodology]: ../assets/unstructured/elasticsearch/methodology.md
+[glt]: https://docs.yscope.com/clp/main/user-guide/core-unstructured/glt.html
+[glt-methodology]: ../assets/unstructured/glt/methodology.md
+[grep-methodology]: ../assets/unstructured/grep/methodology.md
+[hadoop-14TB]: https://zenodo.org/records/7114847
+[Loki]: https://grafana.com/oss/loki/
+[Loki-methodology]: ../assets/unstructured/loki🚧/methodology.md
+[MongoDB]: https://www.mongodb.com/
+[MongoDB-methodology]: ../assets/semi-structured/mongodb/methodology.md
+[mongodb]: https://zenodo.org/records/11075361
+[Splunk]: https://www.splunk.com/
+[Splunk-methodology]: ../assets/unstructured/splunk/methodology.md

@@ -4,3 +4,6 @@ search operations.
 
 In contrast to semi-structured benchmarking, unstructured datasets for Elasticsearch require no
 preprocessing.
+
+[disabling-xpack]: https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html
+[Elasticsearch]: https://www.elastic.co/downloads/elasticsearch

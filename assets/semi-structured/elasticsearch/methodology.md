@@ -7,5 +7,5 @@ refer to the `traverse_data` function in `ingest_script` . This process generall
 reorganizing specific fields, moving them into outer or inner objects to ensure proper query
 functionality.
 
-[Elasticsearch]: https://www.elastic.co/downloads/elasticsearch
 [disabling-xpack]: https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html
+[Elasticsearch]: https://www.elastic.co/downloads/elasticsearch
