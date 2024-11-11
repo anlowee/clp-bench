@@ -57,8 +57,8 @@ The web interface includes a backend and a frontend.
 There is a template `.env` file in this directory. To create a custom configuration, you may copy
 `.env` to `.env.local` and modify the content, which will override the settings in `.env`.
 
-# Benchmarking Results Database
+# Benchmark results database
 
-We use `sqlite` to manage a mini-database that contains all benchmarking results. `load_results.py`
+We use `sqlite` to manage a database that contains all benchmarking results. `load_results.py`
 automatically loads benchmarking results from the `results.json` file under the directory of each
 target tool.
