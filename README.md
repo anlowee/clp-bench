@@ -51,7 +51,9 @@ files:
   - **`related_processes`**: List of command substrings (from `ps aux`) to track relevant memory
     usage.
   - **`queries`**: Array of queries for benchmarking. Ensure escape characters are carefully
-    handled.
+    handled. Note that each query should be wrapped with double quotes (or single quote, depends 
+    on whether the query contains double quotes) as the query will first be passed as an argument of
+    `docker exec` rather than directly to the scripts.
 
 - **`docker-build.sh`**: Builds the container as per the `Dockerfile` in the same directory.
   Usually, only the `container_name` variable should be adjusted to match the `container_id` in
@@ -63,30 +65,30 @@ files:
 - **`Dockerfile`**: Used for building the container, ensuring installation of the required tool and
   dependencies.
 
-- **`launch-script.sh`**: Initializes and starts the tool (e.g., if it functions as a server or
+- **`launch.sh`**: Initializes and starts the tool (e.g., if it functions as a server or
   service).
 
-- **`reset-script.sh`**: Prepares a clean environment by removing previous data (e.g., dropping
-  tables); runs after `launch-script.sh` in `ingest` mode.
+- **`reset.sh`**: Prepares a clean environment by removing previous data (e.g., dropping
+  tables); runs after `launch.sh` in `ingest` mode.
 
-- **`measure-decompressed-size-script.sh`**: Measures the raw dataset size before ingestion.
+- **`measure-decompressed-size.sh`**: Measures the raw dataset size before ingestion.
   Typically unchanged, it takes `datasets_path` from `config.yaml` and uses `du -bc` for size
   calculation in bytes.
 
-- **`ingest-script.sh`**: Handles data ingestion, with clp-bench measuring the total latency of this
+- **`ingest.sh`**: Handles data ingestion, with clp-bench measuring the total latency of this
   script. Avoid adding extra operations.
 
-- **`measure-compressed-size-script.sh`**: Measures the compressed data size post-ingestion, usually
+- **`measure-compressed-size.sh`**: Measures the compressed data size post-ingestion, usually
   via tool-specific methods.
 
-- **`search-script.sh`**: Executes queries specified in `config.yaml`. clp-bench supports two
+- **`search.sh`**: Executes queries specified in `config.yaml`. clp-bench supports two
   benchmarking modes:
 
   - **Hot-run mode**: Runs queries for `hot_run_warm_up_times` to warm up the cache, then measures
     latency.
-  - **Cold-run mode**: Clears the cache with `clear-cache-script.sh` before measuring latency.
+  - **Cold-run mode**: Clears the cache with `clear-cache.sh` before measuring latency.
 
-- **`clear-cache-script.sh`**: Clears the tool's cache, essential for cold runs.
+- **`clear-cache.sh`**: Clears the tool's cache, essential for cold runs.
 
 - **`methodology.md`**: Describes specific benchmarking set up details, including tuning and dataset
   preprocessing.

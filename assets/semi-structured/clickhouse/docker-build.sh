@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 set -e
-set -u
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 container_name="clickhouse-clp-bench"
 
 docker build \
-    -t "$container_name" \
+    --tag "$container_name" \
     "$script_dir" \
-    --file "$script_dir"/Dockerfile
+    --file "${script_dir}/Dockerfile"

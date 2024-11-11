@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-clp_s_binary=/home/assets/clp-s
-data_path=/home/archives
-
-"${clp_s_binary}" s "${data_path}" "$1" | wc -l

@@ -613,14 +613,14 @@ class ClpBenchExecutor:
         assets_path_in_container = config["assets_path"]
         self.__benchmarking_essentials = BenchmarkingEssentials(
             config["container_id"],
-            f"{assets_path_in_container}/reset-script.sh",
-            f"{assets_path_in_container}/launch-script.sh",
-            f"{assets_path_in_container}/measure-decompressed-size-script.sh",
-            f"{assets_path_in_container}/ingest-script.sh",
-            f"{assets_path_in_container}/measure-compressed-size-script.sh",
-            f"{assets_path_in_container}/clear-cache-script.sh",
-            f"{assets_path_in_container}/search-script.sh",
-            f"{assets_path_in_container}/terminate-script.sh",
+            f"{assets_path_in_container}/reset.sh",
+            f"{assets_path_in_container}/launch.sh",
+            f"{assets_path_in_container}/measure-decompressed-size.sh",
+            f"{assets_path_in_container}/ingest.sh",
+            f"{assets_path_in_container}/measure-compressed-size.sh",
+            f"{assets_path_in_container}/clear-cache.sh",
+            f"{assets_path_in_container}/search.sh",
+            f"{assets_path_in_container}/terminate.sh",
             config["datasets_path"],
         )
         self.__queries: List[str] = config["queries"]

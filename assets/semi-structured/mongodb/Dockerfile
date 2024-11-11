@@ -2,9 +2,9 @@ FROM ubuntu:jammy
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    wget \
     curl \
-    gnupg
+    gnupg \
+    wget
 
 # Import MongoDB public GPG key and create MongoDB apt source list
 RUN curl -fsSL 'https://www.mongodb.org/static/pgp/server-6.0.asc' \
@@ -15,16 +15,16 @@ RUN curl -fsSL 'https://www.mongodb.org/static/pgp/server-6.0.asc' \
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    mongodb-org=6.0.19 \
+    libcurl4 \
+    libcurl4-openssl-dev \
     mongodb-org-database=6.0.19 \
-    mongodb-org-server=6.0.19 \
     mongodb-org-mongos=6.0.19 \
+    mongodb-org-server=6.0.19 \
     mongodb-org-tools=6.0.19 \
+    mongodb-org=6.0.19 \
+    python3-pip \
     python3-venv \
     tmux \
     vim \
-    libcurl4 \
-    libcurl4-openssl-dev \
-    python3-pip
 
 RUN pip install pymongo requests numpy matplotlib

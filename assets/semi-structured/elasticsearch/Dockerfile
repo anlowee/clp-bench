@@ -13,12 +13,12 @@ RUN curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch \
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python3-venv \
-    tmux \
-    vim \
+    elasticsearch=8.6.2 \
     libcurl4 \
     libcurl4-openssl-dev \
-    elasticsearch=8.6.2 \
-    python3-pip
+    python3-pip \
+    python3-venv \
+    tmux \
+    vim
 
 RUN pip install elasticsearch requests numpy matplotlib

@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-/opt/splunk/bin/splunk search "index=main \"$1\" | stats count" -auth "admin:admin_password" -preview false 2>/dev/null | awk 'END {print $1}'

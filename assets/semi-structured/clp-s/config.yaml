@@ -11,9 +11,9 @@ hot_run_warm_up_times: 3
 related_processes:
   - /home/assets/clp-s
 queries:
-  - '''attr.tickets:*'''
-  - '''id: 22419'''
-  - '''attr.message.msg: log_release* AND attr.message.session_name: connection'''
+  - '"attr.tickets:*"'
+  - '"id: 22419"'
+  - '"attr.message.msg: log_release* AND attr.message.session_name: connection"'
   - '''ctx: initandlisten AND (NOT msg: "WiredTigermessage" OR attr.message.msg: log_remove*)'''
-  - '''c: WTWRTLOG AND attr.message.ts_sec > 1679490000'''
-  - '''ctx: FlowControlRefresher AND attr.numTrimmed: 0'''
+  - '"c: WTWRTLOG AND attr.message.ts_sec > 1679490000"'
+  - '"ctx: FlowControlRefresher AND attr.numTrimmed: 0"'

@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 set -e
-set -u
+
+if [ -z "$1" ]; then
+    echo "Error: Datasets path argument is missing."
+    echo "Usage: bash ./docker-run.sh <absolute_datasets_path>"
+    exit 1
+fi
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 container_name="clp-clp-bench"
