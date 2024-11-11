@@ -12,20 +12,16 @@ logger = logging.getLogger(__name__)
 
 
 class BenchmarkingMode(Enum):
-    """
-    Enumeration class for different benchmarking modes in CLP Bench.
-
-    This class defines the modes in which the CLP Bench can operate, each representing a distinct
+    """This class defines the modes in which the CLP Bench can operate, each representing a distinct
     way to execute and analyze the benchmarking process.
 
-    Attributes:
-        HOT_RUN_MODE
-            Represents a "hot run" where the system may utilize warmed caches.
-        COLD_RUN_MODE
-            Represents a "cold run" where caches are typically cleared to simulate a cold start
-            scenario.
-        INGEST_MODE
-            Represents an "ingest" mode, focusing on data ingestion without querying.
+    :param HOT_RUN_MODE: Represents a "hot run" where the system may utilize warmed caches.
+    :type HOT_RUN_MODE: str
+    :param COLD_RUN_MODE: Represents a "cold run" where caches are typically cleared to simulate
+        a cold start scenario.
+    :type COLD_RUN_MODE: str
+    :param INGEST_MODE: Represents an "ingest" mode, focusing on data ingestion without querying.
+    :type INGEST_MODE: str
     """
 
     HOT_RUN_MODE = "hot run"
@@ -42,13 +38,11 @@ class BenchmarkingStage(Enum):
     of operation in CLP Bench. Note that currently this class has no use, but leave here for
     reserving flexibility.
 
-    Attributes:
-        INGEST
-            Represents the ingestion stage, where data is ingested into the system for
-            benchmarking.
-        RUN_QUERY_BENCHMARK
-            Represents the query benchmarking stage, where performance is measured based on query
-            execution.
+    .. attribute: `INGEST`
+       Represents the ingestion stage, where data is ingested into the system for benchmarking.
+    .. attribute: `RUN_QUERY_BENCHMARK`
+       Represents the query benchmarking stage, where performance is measured based on query
+       execution.
     """
 
     INGEST = "ingest"
@@ -64,9 +58,8 @@ class BenchmarkingSystemMetric(Enum):
 
     TODO: We are planning to add CPU metric anon.
 
-    Attributes:
-        MEMORY
-            Represents memory usage, measured in kilobytes (KB).
+    .. attribute: `MEMORY`
+       Represents memory usage, measured in kilobytes (KB).
     """
 
     MEMORY = ("memory", "B")
@@ -80,11 +73,10 @@ class BenchmarkingResult:
     and latency measurements, as well as system metrics collected during benchmarking stages. It
     provides methods for formatting size and latency values for display.
 
-    Attributes:
-        SIZE_PRECISION : int
-            Precision for displaying file sizes, in megabytes (MB).
-        TIME_PRECISION : int
-            Precision for displaying latency, in milliseconds (ms).
+    .. attribute: `SIZE_PRECISION`
+       Precision for displaying file sizes, in megabytes (MB).
+    .. attribute: `TIME_PRECISION`
+       Precision for displaying latency, in milliseconds (ms).
 
     Instance Attributes:
         mode : str

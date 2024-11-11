@@ -10,15 +10,16 @@ fi
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 container_name="grep-clp-bench"
+workdir=/home
 
 docker run \
     --privileged \
     -it \
     --rm \
-    --workdir /home \
+    --workdir "$workdir" \
     --network host \
     --name "$container_name" \
     --mount "type=bind,src=$script_dir,dst=/home/assets" \
     --mount "type=bind,src=$1,dst=/home/datasets" \
     "$container_name" \
-    /bin/bash -l
+    bash -c "cd ${workdir} && /bin/bash -l"

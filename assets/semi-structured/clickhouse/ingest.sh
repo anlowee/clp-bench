@@ -10,7 +10,6 @@ fi
 collection_name=clickhouse_clp_bench
 
 clickhouse-client \
-    -t \
     --max_threads 1 \
     --query "INSERT INTO ${collection_name} FROM INFILE '$1' FORMAT JSONAsString" \
     >/dev/null 2>&1

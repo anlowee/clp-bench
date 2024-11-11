@@ -6,6 +6,5 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 container_name="clp-clp-bench"
 
 docker build \
-    --tag "$container_name" \
-    "$script_dir" \
-    --file "${script_dir}/Dockerfile"
+    --file "${script_dir}/Dockerfile" \
+    --tag "$container_name"
