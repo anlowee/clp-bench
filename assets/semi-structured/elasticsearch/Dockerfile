@@ -21,4 +21,4 @@ RUN apt-get update \
     tmux \
     vim
 
-RUN pip install elasticsearch requests numpy matplotlib
+RUN pip install elasticsearch requests

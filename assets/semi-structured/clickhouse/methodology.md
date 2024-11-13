@@ -1,5 +1,6 @@
-We start the ClickHouse server in daemon mode. To store JSON records, we use a
-[single string field][jsonasstring] in ClickHouse, eliminating the need for preprocessing.
+The version of ClickHouse we benchmarked is `23.3.1.2823`. We start the ClickHouse server in daemon 
+mode. To store JSON records, we use a [single string field][jsonasstring] in ClickHouse, 
+eliminating the need for preprocessing.
 
 For query benchmarking, we operate in [single-thread mode][max_threads] by setting
 `max_threads = 1`. Additionally, we configure the
