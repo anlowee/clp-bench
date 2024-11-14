@@ -201,5 +201,5 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(
-        host=os.getenv("VITE_BACKEND_PORT", "127.0.0.1"), port=os.getenv("VITE_BACKEND_HOST", 5000)
+        host=os.getenv("VITE_BACKEND_HOST", "127.0.0.1"), port=os.getenv("VITE_BACKEND_PORT", 5000)
     )
