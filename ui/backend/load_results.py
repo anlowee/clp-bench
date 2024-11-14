@@ -20,6 +20,7 @@ project_root_dir = os.path.abspath(os.path.join(ui_root_dir, ".."))
 assets_dir = os.path.abspath(os.path.join(project_root_dir, "assets"))
 type_dirs = os.listdir(assets_dir)
 results = []
+# Iterate over assets/ and get results automatically
 for type_dir in type_dirs:
     type_path = os.path.join(assets_dir, type_dir)
     target_dirs = os.listdir(type_path)
@@ -47,6 +48,8 @@ for type_dir in type_dirs:
 
 
 def dump_and_post():
+    """This function construct the request for each benchmark result and send it to the Flask
+    backend"""
     headers = {"Content-Type": "application/json"}
     for result in results:
         payload = json.dumps(
