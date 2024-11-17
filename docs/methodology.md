@@ -118,7 +118,7 @@ The benchmark currently tests the following tools:
   - `grep` (📐[methodology][grep-methodology]).
 - For semi-structured logs:
   - [CLP-S][clp-s] (📐[methodology][clp-s-methodology]).
-  - [Elasticsearch] (📐[methodology](Elasticsearch-semi-structured-methodology)).
+  - [Elasticsearch] (📐[methodology][Elasticsearch-semi-structured-methodology]).
   - [MongoDB] (📐[methodology][MongoDB-methodology]).
   - [ClickHouse] (📐[methodology][ClickHouse-methodology]).
 
