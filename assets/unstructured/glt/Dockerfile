@@ -7,5 +7,5 @@ RUN apt-get update \
     python3-venv \
     rsync \
     sqlite3 \
-    vim \
-    tmux
+    tmux \
+    vim

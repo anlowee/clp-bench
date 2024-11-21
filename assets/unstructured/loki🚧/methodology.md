@@ -1,3 +1,9 @@
+# Basic Information
+| Version | Download Link (Image or Binary) |
+|---------|---------------------------------|
+| 3.0.0   | 💾[Download][Download]          |
+
+# Specifics
 [Loki] runs with two microservices. Loki itself is working as a backend which ingests the data sent
 by the log collector. We use [Promtail] as its log collector. These two are running in two
 containers communicated through REST APIs. For query benchmark, we use [LogCLI] to execute queries.
@@ -5,7 +11,7 @@ containers communicated through REST APIs. For query benchmark, we use [LogCLI] 
 We haven't integrated launching and ingesting for Loki into `clp-bench` yet, so you may need to
 manually launch and ingest data first, then use `clp-bench` to run the query benchmark.
 
-# Launch
+## Launch
 
 To run Loki, create a `loki-config.yaml` configuration file as the following (see details
 [here][loki-config]):
@@ -113,7 +119,7 @@ When containers for Loki and Promtail have been launched, run the following comm
 curl -G http://localhost:3100/ready
 ```
 
-# Ingest
+## Ingest
 
 Loki ingests data automatically when connects to Promtail. We do not do any preprocessing for the
 dataset.
@@ -141,7 +147,7 @@ curl -G http://localhost:3100/metrics | \
   grep 'loki_request_duration_seconds_sum{method="POST",route="loki_api_v1_push"'
 ```
 
-# Query Benchmarking
+## Query Benchmarking
 
 The configuration of query benchmarking is in `search.py` .
 
@@ -175,6 +181,7 @@ time slices between `from` and `to` in the configuration to cover the entire dat
 For measuring memory usage during query execution, we employ the same method used for data
 ingestion.
 
+[Download]: https://github.com/grafana/loki/releases/tag/v3.0.0
 [LogCLI]: https://grafana.com/docs/loki/latest/query/logcli/
 [loki-config]: https://grafana.com/docs/loki/latest/configure/
 [Loki]: https://grafana.com/oss/loki/

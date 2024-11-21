@@ -1,13 +1,17 @@
-We primarily use the default settings for single-node deployment in Splunk, with a few
-modifications: we removed the event length restriction (`TRUNCATE = 0`) and configured each log line
-as an individual event (`BREAK_ONLY_BEFORE_DATE = false` and `SHOULD_LINEMERGE = false`).
+# Basic Information
+| Version | Download Link (Image or Binary) |
+|---------|---------------------------------|
+| 9.3.2   | 💾[Download][Download]          |
+
+# Specifics
+We removed the event length restriction (`TRUNCATE = 0`) and configured each log line as an 
+individual event (`BREAK_ONLY_BEFORE_DATE = false` and `SHOULD_LINEMERGE = false`).
 
 Data ingestion is handled using `add monitor ${datasets}`. However, we noticed a discrepancy between
 the raw data size (257.25 GB) and the size ingested by Splunk (255.61 GB), resulting in a data loss
 of 1.64 GB.
 
 Upon investigation, we found that Splunk overlooked certain files during ingestion:
-
 ```
 /home/datasets/worker1/worker1/SecurityAuth-root.audit
 /home/datasets/worker1/worker1/hadoop-root-datanode-8dc59161430b.out
@@ -38,5 +42,7 @@ Upon investigation, we found that Splunk overlooked certain files during ingesti
 /home/datasets/worker3/worker3/yarn-root-nodemanager-8ed8bf9ebb0e.out.3
 ```
 
-The total size of these files is 26.21 KB. The most of remaining of missing data is still
+The total size of these files is 26.21 KB. The most of remaining of missing data is still 
 unaccounted for, but they have no impact on query results of the queries we use during benchmarking.
+
+[Download]: https://www.splunk.com/en_us/download/splunk-enterprise.html

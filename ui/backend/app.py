@@ -36,7 +36,7 @@ class BenchmarkingResult(db.Model):
     """A switch of result, typically should be True
     """
     type: Mapped[int] = mapped_column(nullable=False)
-    """The type of the results, type-0: debug, type-1: unstructured, type-2: semi-structured
+    """The type of the results, type-0: debug, type-1: unstructured, type-2: dynamically-structured
     """
     metric: Mapped[int] = mapped_column(nullable=False)
     """The metric of the results, metric-0: debug, metric-1: hot run, metric-2: cold run

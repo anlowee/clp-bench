@@ -25,6 +25,8 @@ for type_dir in type_dirs:
     type_path = os.path.join(assets_dir, type_dir)
     target_dirs = os.listdir(type_path)
     for target_dir in target_dirs:
+        if "template" == target_dir:
+            continue
         target_path = os.path.join(type_path, target_dir)
         results_of_target = json.load(open(os.path.join(target_path, "results.json"), "r"))
         for metric in range(1, 3):
