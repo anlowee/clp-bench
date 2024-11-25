@@ -9,7 +9,7 @@ if [ -z "$1" ]; then
 fi
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-container_name="grep-clp-bench"
+container_name=$(cat "$script_dir/container-name")
 workdir=/home
 
 docker run \

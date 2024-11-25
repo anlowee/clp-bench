@@ -1,7 +1,7 @@
 # Basic Information
 | Version | Download Link (Image or Binary) |
 |---------|---------------------------------|
-| 9.3.2   | 💾[Download][Download]          |
+| 9.3.2   | 💾[Download][download]          |
 
 # Specifics
 We removed the event length restriction (`TRUNCATE = 0`) and configured each log line as an 
@@ -45,4 +45,4 @@ Upon investigation, we found that Splunk overlooked certain files during ingesti
 The total size of these files is 26.21 KB. The most of remaining of missing data is still 
 unaccounted for, but they have no impact on query results of the queries we use during benchmarking.
 
-[Download]: https://www.splunk.com/en_us/download/splunk-enterprise.html
+[download]: https://www.splunk.com/en_us/download/splunk-enterprise.html

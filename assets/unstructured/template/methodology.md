@@ -1,12 +1,16 @@
-# Basic Information
-| Version | Download Link (Image or Binary) |
-|---------|---------------------------------|
-| 1.0.0   | 💾[Download][Download]          |
+# Tool name methodology
 
-Describe basic setup process if it is complicated.
+## Basics
 
-# Specifics
+Version: [1.0.0][download]
+
+## Setup
+
+Describe any manual set up steps necessary for the tool.
+
+## Specifics
+
 Describe any specific tuning, preprocessing or configuration that beyond the defaults you made for 
 benchmarking. If there is no specifics you can delete this section.
 
-[Download]: https://via.placeholder.com/20
+[download]: https://via.placeholder.com/20

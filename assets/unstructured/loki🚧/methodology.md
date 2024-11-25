@@ -1,12 +1,12 @@
 # Basic Information
 | Version | Download Link (Image or Binary) |
 |---------|---------------------------------|
-| 3.0.0   | 💾[Download][Download]          |
+| 3.0.0   | 💾[Download][download]          |
 
 # Specifics
-[Loki] runs with two microservices. Loki itself is working as a backend which ingests the data sent
-by the log collector. We use [Promtail] as its log collector. These two are running in two
-containers communicated through REST APIs. For query benchmark, we use [LogCLI] to execute queries.
+[loki] runs with two microservices. Loki itself is working as a backend which ingests the data sent
+by the log collector. We use [promtail] as its log collector. These two are running in two
+containers communicated through REST APIs. For query benchmark, we use [logcli] to execute queries.
 
 We haven't integrated launching and ingesting for Loki into `clp-bench` yet, so you may need to
 manually launch and ingest data first, then use `clp-bench` to run the query benchmark.
@@ -181,8 +181,8 @@ time slices between `from` and `to` in the configuration to cover the entire dat
 For measuring memory usage during query execution, we employ the same method used for data
 ingestion.
 
-[Download]: https://github.com/grafana/loki/releases/tag/v3.0.0
-[LogCLI]: https://grafana.com/docs/loki/latest/query/logcli/
+[download]: https://github.com/grafana/loki/releases/tag/v3.0.0
+[logcli]: https://grafana.com/docs/loki/latest/query/logcli/
 [loki-config]: https://grafana.com/docs/loki/latest/configure/
-[Loki]: https://grafana.com/oss/loki/
-[Promtail]: https://grafana.com/docs/loki/latest/send-data/promtail/
+[loki]: https://grafana.com/oss/loki/
+[promtail]: https://grafana.com/docs/loki/latest/send-data/promtail/

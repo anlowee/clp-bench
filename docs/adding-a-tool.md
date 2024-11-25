@@ -1,29 +1,18 @@
-# Contributing
+# Add a tool
 
 🚧 This section is under construction.
 
-We encourage contributions that add benchmark results for various tools to support broader community
-development.
+To benchmark a new system, duplicate either [us-assets-template] or [ds-asssets-template] and make 
+necessary changes. The files in the templates are as follows:
 
-## Adding new results
-
-To benchmark a new system, duplicate either [unstructured assets template] or 
-[dynamically-structured assets template] and make necessary changes. Here is an overview of the 
-content of the templates.
-
-- **`config.yaml`**: Contains essential benchmarking configurations. For details, please refer 
-  to the comments in the `config.yaml` under either [unstructured assets template] or 
-  [dynamically-structured assets template]
+- **`config.yaml`**: Contains essential benchmarking configurations.
 
 - **`docker-build.sh`**: Builds the container as per the `Dockerfile` in the same directory.
-  Usually, only the `container_name` variable should be adjusted to match the `container_id` in
-  `config.yaml`.
 
-- **`docker-run.sh`**: Runs the container, taking the dataset path as an argument. Typically, only
-  the `container_name` variable needs alignment with `container_id` in `config.yaml`.
+- **`docker-run.sh`**: Runs the container, taking the dataset path as an argument.
 
-- **`Dockerfile`**: Used for building the container, ensuring installation of the required tool and
-  dependencies.
+- **`Dockerfile`**: Used for building the container, ensuring installation of the required tool to
+  benchmark and dependencies.
 
 - **`launch.sh`**: Initializes and starts the tool (e.g., if it functions as a server or
   service).
@@ -35,7 +24,7 @@ content of the templates.
   Typically unchanged, it takes `datasets_path` from `config.yaml` and uses `du -bc` for size
   calculation in bytes.
 
-- **`ingest.sh`**: Handles data ingestion, with clp-bench measuring the total latency of this
+- **`ingest.sh`**: Handles data ingestion, with `clp-bench` measuring the total latency of this
   script. Avoid adding extra operations.
 
 - **`measure-compressed-size.sh`**: Measures the compressed data size post-ingestion, usually
@@ -55,11 +44,11 @@ content of the templates.
 
 - **`results.json`**: Contains benchmarking results, which are loaded and displayed in the UI:
 
-  - **`target`**: The ID used by the frontend, should be lowercase. IDs of the same type must be
-    unique.
+  - **`target`**: The ID used by the frontend, should be lowercase. IDs of the same `type` (as 
+    introduced below) must be unique.
   - **`targetDisplayedName`**: The name to display in the column on the webpage.
   - **`displayedOrder`**: Defines the display order of results; a smaller value places the column
-    further to the right.
+    further to the left.
   - **`isEnable`**: Indicates if the results should be displayed (default is `true`). If set to
     `false`, results won't appear on the webpage.
   - **`type`**: Specifies data type (1 for Unstructured, 2 for Dynamically-structured).
@@ -72,5 +61,9 @@ content of the templates.
     - **`avgQueryMem`**: The average memory usage during query benchmarking.
     - **`queryTimes`**: An array of end-to-end query latencies, ordered to match the sequence of
       queries.
+
 - **binary (optional)**: If the benchmarked tool is run via binary, then you should put a 
-  `replace-with-your-tool-binary` file in the assets. 
+  `replace-with-your-tool-binary` file in the assets.
+
+[ds-asssets-template]: assets/dynamically-structured/template
+[us-assets-template]: assets/unstructured/template
