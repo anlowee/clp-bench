@@ -62,8 +62,5 @@ necessary changes. The files in the templates are as follows:
     - **`queryTimes`**: An array of end-to-end query latencies, ordered to match the sequence of
       queries.
 
-- **binary (optional)**: If the benchmarked tool is run via binary, then you should put a 
-  `replace-with-your-tool-binary` file in the assets.
-
 [ds-asssets-template]: assets/dynamically-structured/template
 [us-assets-template]: assets/unstructured/template
