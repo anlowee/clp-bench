@@ -42,9 +42,8 @@ workflow for ingesting data is:
 
 ```mermaid
 flowchart TD
-    Launch --> Reset
+    Launch --> |Clear any archives <br>and temporary files<br> from previous runs.| Reset
     Reset -->|Measure raw data size.<br>Set start timestamp.| Ingest
-    Reset ~~~|Clear any archives <br>and temporary files<br> from previous runs.| Reset
     Ingest -->|Measure compressed data size.<br>Set end timestamp.| Terminate
 ```
 
